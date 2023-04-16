@@ -1,0 +1,8 @@
+.env
+api_rest/package-lock.json
+api_rest/node_modules
+db/er_dietariodb_corto.png
+db/init_data.sql
+db/initdb_corta.sql
+db/initdb_larga.sql
+db/initdb.sql
