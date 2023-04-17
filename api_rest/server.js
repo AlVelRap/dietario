@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 
 // Nuestras Rutas
 require("./app/routes/usuario.route")(app);
+require("./app/routes/cliente.route")(app);
 
 // set port, listen for requests
 const PORT = process.env.NODE_DOCKER_PORT || 3000;
