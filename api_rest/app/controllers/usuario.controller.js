@@ -59,11 +59,6 @@ exports.findOne = (req, res) => {
   });
 };
 
-// // find all published Usuario
-// exports.findAllPublished = (req, res) => {
-
-// };
-
 // Actualizar un Usuario por su ID
 exports.update = (req, res) => {
   // Validamos la petición
