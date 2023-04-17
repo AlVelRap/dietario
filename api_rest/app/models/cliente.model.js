@@ -98,10 +98,10 @@ Cliente.updateById = (id_cliente, cliente, result) => {
   );
 };
 
-Cliente.remove = (id_cliente, result) => {
+Cliente.remove = (id_user,id_cliente, result) => {
   conn.query(
-    "DELETE FROM cliente WHERE id_cliente = ?",
-    [id_cliente],
+    "DELETE FROM cliente WHERE id_user = ? AND id_cliente = ?",
+    [id_cliente,id_user],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -121,8 +121,8 @@ Cliente.remove = (id_cliente, result) => {
   );
 };
 
-Cliente.removeAll = (result) => {
-  conn.query("DELETE FROM cliente", (err, res) => {
+Cliente.removeAll = (id_user, result) => {
+  conn.query("DELETE FROM cliente WHERE id_user = ?", [id_user], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

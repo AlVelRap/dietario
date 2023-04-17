@@ -83,7 +83,7 @@ exports.update = (req, res) => {
 
 // Borrar un Cliente por su ID
 exports.delete = (req, res) => {
-  Cliente.remove(req.params.id_cliente, (err, data) => {
+  Cliente.remove(req.params.id_user,req.params.id_cliente, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -100,7 +100,7 @@ exports.delete = (req, res) => {
 
 // Borrar todos los Clientes de la DB.
 exports.deleteAll = (req, res) => {
-  Cliente.removeAll((err, data) => {
+  Cliente.removeAll(req.params.id_user,(err, data) => {
     if (err)
       res.status(500).send({
         message: err.message || "Un error ocurrió al borrar los Clientes.",

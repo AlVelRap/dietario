@@ -20,10 +20,10 @@ module.exports = (app) => {
     router.put("/:id_cliente", cliente.update);
   
     // Borrar un cliente con su id
-    router.delete("/:id_cliente", cliente.delete);
+    router.delete("/:id_user/:id_cliente", cliente.delete);
   
     // Borrar todos los clientes
-    router.delete("/", cliente.deleteAll);
+    router.delete("/:id_user", cliente.deleteAll);
   
     app.use(`/${API}/${REST}/${VERSION}/cliente`, router);
   };
