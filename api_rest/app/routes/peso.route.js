@@ -11,19 +11,19 @@ module.exports = (app) => {
     router.post("/", peso.create);
   
     // Obtener los pesos
-    router.get("/:id_cliente", peso.findAll);
+    router.get("/cliente/:id_cliente", peso.findAll);
   
     // Obtener un peso con su id
-    router.get("/:id_cliente/:id_peso", peso.findOne);
+    router.get("/:id_peso/cliente/:id_cliente", peso.findOne);
   
     // Actualizar un peso con su id
     router.put("/:id_peso", peso.update);
   
     // Borrar un peso con su id
-    router.delete("/:id_cliente/:id_peso", peso.delete);
+    router.delete("/:id_peso/cliente/:id_cliente", peso.delete);
   
     // Borrar todos los pesos
-    router.delete("/:id_cliente", peso.deleteAll);
+    router.delete("/cliente/:id_cliente", peso.deleteAll);
   
     app.use(`/${API}/${REST}/${VERSION}/peso`, router);
   };

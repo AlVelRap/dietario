@@ -11,19 +11,19 @@ module.exports = (app) => {
     router.post("/", dieta.create);
   
     // Obtener los dietas
-    router.get("/:id_cliente", dieta.findAll);
+    router.get("/cliente/:id_cliente", dieta.findAll);
   
     // Obtener un dieta con su id
-    router.get("/:id_cliente/:id_dieta", dieta.findOne);
+    router.get("/:id_dieta/cliente/:id_cliente", dieta.findOne);
   
     // Actualizar un dieta con su id
     router.put("/:id_dieta", dieta.update);
   
     // Borrar un dieta con su id
-    router.delete("/:id_cliente/:id_dieta", dieta.delete);
+    router.delete("/:id_dieta/cliente/:id_cliente", dieta.delete);
   
     // Borrar todos los dietas
-    router.delete("/:id_cliente", dieta.deleteAll);
+    router.delete("/cliente/:id_cliente", dieta.deleteAll);
   
     app.use(`/${API}/${REST}/${VERSION}/dieta`, router);
   };

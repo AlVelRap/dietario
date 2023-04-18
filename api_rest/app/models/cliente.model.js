@@ -61,12 +61,6 @@ Cliente.getAll = (id_user, result) => {
 };
 
 Cliente.updateById = (id_cliente, cliente, result) => {
-    console.log(id_cliente)
-//   this.id_cliente = cliente.id_cliente;
-//   this.id_user = cliente.id_user;
-//   this.nombre = cliente.nombre;
-//   this.apellidos = cliente.apellidos;
-//   this.imagen = cliente.imagen;
   conn.query(
     "UPDATE cliente SET id_user = ?, nombre = ?, apellidos = ?, imagen = ? WHERE id_cliente = ?;",
     [
@@ -101,7 +95,7 @@ Cliente.updateById = (id_cliente, cliente, result) => {
 Cliente.remove = (id_user,id_cliente, result) => {
   conn.query(
     "DELETE FROM cliente WHERE id_user = ? AND id_cliente = ?",
-    [id_cliente,id_user],
+    [id_user,id_cliente],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

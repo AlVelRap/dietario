@@ -11,19 +11,19 @@ module.exports = (app) => {
     router.post("/", cliente.create);
   
     // Obtener los clientes
-    router.get("/:id_user", cliente.findAll);
+    router.get("/usuario/:id_user", cliente.findAll);
   
     // Obtener un cliente con su id
-    router.get("/:id_user/:id_cliente", cliente.findOne);
+    router.get("/:id_cliente/usuario/:id_user", cliente.findOne);
   
     // Actualizar un cliente con su id
     router.put("/:id_cliente", cliente.update);
   
     // Borrar un cliente con su id
-    router.delete("/:id_user/:id_cliente", cliente.delete);
+    router.delete("/:id_cliente/usuario/:id_user", cliente.delete);
   
     // Borrar todos los clientes
-    router.delete("/:id_user", cliente.deleteAll);
+    router.delete("/usuario/:id_user", cliente.deleteAll);
   
     app.use(`/${API}/${REST}/${VERSION}/cliente`, router);
   };

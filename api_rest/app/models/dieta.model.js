@@ -94,7 +94,7 @@ Dieta.updateById = (id_dieta, dieta, result) => {
 Dieta.remove = (id_cliente, id_dieta, result) => {
   conn.query(
     "DELETE FROM dieta WHERE id_cliente = ? AND id_dieta = ?",
-    [id_dieta, id_cliente],
+    [id_cliente,id_dieta],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
