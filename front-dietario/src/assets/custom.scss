@@ -1,0 +1,39 @@
+// Sobre escribimos las variables que queremos cambiar
+$primary: #416900;
+$secondary: #586249;
+
+$primary-container: #b6f566;
+$on-primary-container: #102000;
+$inverse-primary: #9bd84d;
+
+// para hacer que el toggle del navbar sea blanco
+
+$color-toggle-navbar:#fff;
+
+$navbar-light-color:                rgba($color-toggle-navbar, .55);
+$navbar-light-hover-color:          rgba($color-toggle-navbar, .7);
+$navbar-light-active-color:         rgba($color-toggle-navbar, .9);
+$navbar-light-disabled-color:       rgba($color-toggle-navbar, .3);
+$navbar-light-toggler-border-color: rgba($color-toggle-navbar, .1);
+
+// importamos bootstrap
+@import "bootstrap";
+
+// Indicamos nuestras nuevas clases
+
+.modal-header {
+  border-bottom: 0px;
+}
+.modal-footer {
+  border-top: 0px;
+}
+
+.btn-round{
+    border-radius: 100px;
+    height: 48px;
+}
+
+.bg-primary-container{
+    background-color: $primary-container;
+}
+

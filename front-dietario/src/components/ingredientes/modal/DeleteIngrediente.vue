@@ -1,0 +1,52 @@
+<template>
+  <div class="modal-body">
+    ¿Está seguro de que desea eliminar el ingrediente?
+  </div>
+  <div class="modal-footer text-center">
+    <button
+      type="button"
+      class="btn btn-primary"
+      @click="deleteIngrediente"
+      data-bs-dismiss="modal"
+    >
+      Borrar
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      @click="$emit('showEditIngrediente')"
+    >
+      Cancelar
+    </button>
+  </div>
+</template>
+<script lang="ts">
+import { defineComponent } from "vue";
+// Servicios
+import IngestaIngredienteService from "@/services/ingestaIngrediente.service";
+// Tipos
+import type ResponseData from "@/types/ResponseData";
+
+export default defineComponent({
+  name: "DeleteIngrediente",
+  props: {
+    id_ingesta: Number,
+    id_ingrediente: Number,
+  },
+  methods: {
+    deleteIngrediente() {
+      if (!this.id_ingrediente || !this.id_ingesta) return;
+      IngestaIngredienteService.delete(
+        this.id_ingrediente,
+        this.id_ingesta
+      ).then((response: ResponseData) => {
+        if (response) {
+          this.$emit("deleteIngrediente");
+        }
+        // Emitir evento para que se recargue todo
+      });
+    },
+  },
+  emits: ["deleteIngrediente", "showEditIngrediente"],
+});
+</script>
