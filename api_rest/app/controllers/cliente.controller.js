@@ -13,6 +13,7 @@ exports.create = (req, res) => {
     id_user: req.body.id_user,
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
+    fecha_nacimiento: req.body.fecha_nacimiento,
     imagen: req.body.imagen,
   });
 
@@ -28,7 +29,8 @@ exports.create = (req, res) => {
 
 // Recibir los Clientes de la DB (con condicion).
 exports.findAll = (req, res) => {
-  Cliente.getAll(req.params.id_user,(err, data) => {
+  Cliente.getAll(req.user.id_user,(err, data) => {
+
     if (err)
       res.status(500).send({
         message: err.message || "Un error ocurrió al recibir los Clientes.",
@@ -39,7 +41,7 @@ exports.findAll = (req, res) => {
 
 // Encontrar un Cliente por su ID
 exports.findOne = (req, res) => {
-  Cliente.findById(req.params.id_user,req.params.id_cliente, (err, data) => {
+  Cliente.findById(req.user.id_user,req.params.id_cliente, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -63,10 +65,10 @@ exports.update = (req, res) => {
     });
   }
 
-  console.log(req.body);
-  console.log(req.params.id_cliente);
+  // console.log(req.body);
+  // console.log(req.params.id_cliente);
 
-  Cliente.updateById(req.params.id_cliente, new Cliente(req.body), (err, data) => {
+  Cliente.updateById(req.s.id_cliente, new Cliente(req.body), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -83,7 +85,7 @@ exports.update = (req, res) => {
 
 // Borrar un Cliente por su ID
 exports.delete = (req, res) => {
-  Cliente.remove(req.params.id_user,req.params.id_cliente, (err, data) => {
+  Cliente.remove(req.user.id_user,req.params.id_cliente, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -100,7 +102,7 @@ exports.delete = (req, res) => {
 
 // Borrar todos los Clientes de la DB.
 exports.deleteAll = (req, res) => {
-  Cliente.removeAll(req.params.id_user,(err, data) => {
+  Cliente.removeAll(req.user.id_user,(err, data) => {
     if (err)
       res.status(500).send({
         message: err.message || "Un error ocurrió al borrar los Clientes.",

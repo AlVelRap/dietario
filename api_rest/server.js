@@ -9,7 +9,8 @@ const app = express();
 
 // Configuracion del CORS
 var corsOptions = {
-  origin: "http://localhost:8081",
+  // origin: "http://localhost:5173/",
+  origin: "*",
 };
 app.use(cors(corsOptions));
 

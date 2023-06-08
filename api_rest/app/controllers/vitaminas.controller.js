@@ -1,30 +1,30 @@
-const Acidos_Grasos = require("../models/acidos_grasos.model.js");
+const Vitaminas = require("../models/vitaminas.model.js");
 
-// Recibir los acidos_grasoss de la DB (con condicion).
+// Recibir los vitaminass de la DB (con condicion).
 exports.findAll = (req, res) => {
   // const nombre = req.query.nombre;
 
-  // Acidos_Grasos.getAll(nombre, (err, data) => {
-  Acidos_Grasos.getAll((err, data) => {
+  // Vitaminas.getAll(nombre, (err, data) => {
+  Vitaminas.getAll((err, data) => {
     if (err)
       res.status(500).send({
-        message: err.message || "Un error ocurrió al recibir los acidos_grasoss.",
+        message: err.message || "Un error ocurrió al recibir los vitaminass.",
       });
     else res.send(data);
   });
 };
 
-// Encontrar un Acidos_Grasos por su ID
+// Encontrar un Vitaminas por su ID
 exports.findOne = (req, res) => {
-  Acidos_Grasos.findById(req.params.id_ingrediente, (err, data) => {
+  Vitaminas.findById(req.params.id_ingrediente, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `No se ha encontrado acidos_grasos con el id ${req.params.id_ingrediente}.`,
+          message: `No se ha encontrado vitaminas con el id ${req.params.id_ingrediente}.`,
         });
       } else {
         res.status(500).send({
-          message: "Error al recibir el acidos_grasos con id " + req.params.id_ingrediente,
+          message: "Error al recibir el vitaminas con id " + req.params.id_ingrediente,
         });
       }
     } else res.send(data);

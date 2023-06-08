@@ -88,11 +88,13 @@ Ingesta_Ingrediente.updateById = (
       }
 
       console.log("ingesta_ingrediente actualizado: ", {
-        id_ingesta: id_ingesta,id_ingrediente: id_ingrediente,
+        id_ingesta: id_ingesta,
+        id_ingrediente: id_ingrediente,
         ...ingesta_ingrediente,
       });
       result(null, {
-        id_ingesta_ingrediente: id_ingesta_ingrediente,id_ingrediente: id_ingrediente,
+        id_ingesta: id_ingesta,
+        id_ingrediente: id_ingrediente,
         ...ingesta_ingrediente,
       });
     }
@@ -118,7 +120,7 @@ Ingesta_Ingrediente.remove = (id_ingesta, id_ingrediente, result) => {
 
       console.log(
         "Borrado el ingesta_ingrediente con el id: ",
-        id_ingesta_ingrediente
+        id_ingrediente
       );
       result(null, res);
     }

@@ -24,7 +24,32 @@ Usuario.create = (nuevoUsuario, result) => {
 };
 
 Usuario.findById = (id, result) => {
-  conn.query(`SELECT * FROM usuario WHERE id_user = ?`, [id], (err, res) => {
+  conn.query(
+    // `SELECT nombre, apellidos, email FROM usuario WHERE id_user = ?`,
+    `SELECT * FROM usuario WHERE id_user = ?`,
+
+    [id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      if (res.length) {
+        console.log("usuario encontrado: ", res[0]);
+        result(null, res[0]);
+        return;
+      }
+
+      // Usuario no encontrado por ID
+      result({ kind: "not_found" }, null);
+    }
+  );
+};
+
+Usuario.findByEmail = (email, result) => {
+  conn.query(`SELECT * FROM usuario WHERE email = ?`, [email], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -37,7 +62,7 @@ Usuario.findById = (id, result) => {
       return;
     }
 
-    // Usuario no encontrado por ID
+    // Usuario no encontrado por email
     result({ kind: "not_found" }, null);
   });
 };

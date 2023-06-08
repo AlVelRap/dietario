@@ -45,7 +45,7 @@ Peso.findById = (id_cliente, id_peso, result) => {
 };
 
 Peso.getAll = (id_cliente, result) => {
-  let query = "SELECT * FROM peso WHERE id_cliente = ?";
+  let query = "SELECT * FROM peso WHERE id_cliente = ? ORDER BY fecha ASC";
 
   conn.query(query, [id_cliente], (err, res) => {
     if (err) {

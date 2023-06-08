@@ -1,4 +1,5 @@
 module.exports = (app) => {
+  const { isAuthenticated } = require("../auth/index");
   const VERSION = "1.0";
   const REST = "rest";
   const API = "api";
@@ -8,22 +9,28 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // Crear un nuevo usuario
-  router.post("/", usuario.create);
+  router.post("/register", usuario.create);
+  // Para hacer login
+  router.post("/login", usuario.login);
 
-  // Obtener un nuevo usuario
-  router.get("/", usuario.findAll);
+  // // Obtener un nuevo usuario
+  // router.get("/", isAuthenticated, usuario.findAll);
 
+  // // Obtener un usuario con su id
+  // router.get("/:id", isAuthenticated, usuario.findOne);
   // Obtener un usuario con su id
-  router.get("/:id", usuario.findOne);
+  router.get("/", isAuthenticated, usuario.findOne);
 
   // Actualizar un usuario con su id
-  router.put("/:id", usuario.update);
+  router.put("/", isAuthenticated, usuario.update);
+  // Actualizar un usuario con su id
+  router.put("/password", isAuthenticated, usuario.updatePass);
 
   // Borrar un usuario con su id
-  router.delete("/:id", usuario.delete);
+  router.delete("/:id", isAuthenticated, usuario.delete);
 
   // Borrar todos los usuarios
-  router.delete("/", usuario.deleteAll);
+  router.delete("/", isAuthenticated, usuario.deleteAll);
 
   app.use(`/${API}/${REST}/${VERSION}/usuario`, router);
 };

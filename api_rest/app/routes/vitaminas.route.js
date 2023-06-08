@@ -1,4 +1,5 @@
 module.exports = (app) => {
+  const { isAuthenticated } = require("../auth/index");
   const VERSION = "1.0";
   const REST = "rest";
   const API = "api";
@@ -8,10 +9,14 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // Obtener un nuevo vitaminas
-  router.get("/", vitaminas.findAll);
+  router.get("/", isAuthenticated, vitaminas.findAll);
 
   // Obtener un vitaminas con su id
-  router.get("/ingrediente/:id_ingrediente", vitaminas.findOne);
+  router.get(
+    "/ingrediente/:id_ingrediente",
+    isAuthenticated,
+    vitaminas.findOne
+  );
 
   app.use(`/${API}/${REST}/${VERSION}/vitaminas`, router);
 };

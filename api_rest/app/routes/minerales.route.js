@@ -1,4 +1,5 @@
 module.exports = (app) => {
+  const { isAuthenticated } = require("../auth/index");
   const VERSION = "1.0";
   const REST = "rest";
   const API = "api";
@@ -8,10 +9,14 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // Obtener un nuevo minerales
-  router.get("/", minerales.findAll);
+  router.get("/", isAuthenticated, minerales.findAll);
 
   // Obtener un minerales con su id
-  router.get("/ingrediente/:id_ingrediente", minerales.findOne);
+  router.get(
+    "/ingrediente/:id_ingrediente",
+    isAuthenticated,
+    minerales.findOne
+  );
 
   app.use(`/${API}/${REST}/${VERSION}/minerales`, router);
 };

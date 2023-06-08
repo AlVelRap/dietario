@@ -45,7 +45,7 @@ Dieta.findById = (id_cliente, id_dieta, result) => {
 };
 
 Dieta.getAll = (id_cliente, result) => {
-  let query = "SELECT * FROM dieta WHERE id_cliente = ?";
+  let query = "SELECT * FROM dieta WHERE id_cliente = ? ORDER BY fecha_dieta DESC";
 
   conn.query(query, [id_cliente], (err, res) => {
     console.log(query)

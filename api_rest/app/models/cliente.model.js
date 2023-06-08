@@ -6,6 +6,7 @@ const Cliente = function (cliente) {
   this.id_user = cliente.id_user;
   this.nombre = cliente.nombre;
   this.apellidos = cliente.apellidos;
+  this.fecha_nacimiento = cliente.fecha_nacimiento
   this.imagen = cliente.imagen;
 };
 

@@ -1,6 +1,0 @@
-Falta por añadir el delete cascade a la mayoria de lo de borrar!
-
-
-Modificar todas las rutas para que coincida con lo que pone aqui:
-GET /clientes/231/proyectos/4
-lo del plural me da igual pero lo de concatenar cosas si que es interesante
