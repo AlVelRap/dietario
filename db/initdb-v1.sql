@@ -5,9 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- Create user
-drop user if exists 'admindieta'@'%';
-CREATE USER IF NOT EXISTS 'admindieta'@'%' IDENTIFIED BY 'admindieta';
-GRANT ALL PRIVILEGES ON dietariodb.* TO 'admindieta'@'%';
+-- drop user if exists 'admindieta'@'%';
+-- CREATE USER IF NOT EXISTS 'admindieta'@'%' IDENTIFIED BY 'admindieta';
+-- GRANT ALL PRIVILEGES ON dietariodb.* TO 'admindieta'@'%';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -47,7 +47,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`ingrediente` (
   INDEX `id_grupo` (`id_grupo` ASC) VISIBLE,
   CONSTRAINT `ingrediente_ibfk_1`
     FOREIGN KEY (`id_grupo`)
-    REFERENCES `dietariodb`.`grupo_alimentario` (`id_grupo`))
+    REFERENCES `dietariodb`.`grupo_alimentario` (`id_grupo`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 AUTO_INCREMENT = 406
 DEFAULT CHARACTER SET = utf8mb4
@@ -74,7 +76,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`acidos_grasos` (
   INDEX `id_ingrediente` (`id_ingrediente` ASC) VISIBLE,
   CONSTRAINT `acidos_grasos_ibfk_1`
     FOREIGN KEY (`id_ingrediente`)
-    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`))
+    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -106,12 +110,15 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`cliente` (
   `id_user` INT NULL DEFAULT NULL,
   `nombre` VARCHAR(64) NOT NULL,
   `apellidos` VARCHAR(64) NOT NULL,
+  `fecha_nacimiento` DATE NOT NULL DEFAULT (CURRENT_DATE),
   `imagen` VARCHAR(255) NULL DEFAULT 'https://c8.alamy.com/zooms/9/80d94c5b96c54446b2dc609a62b9f61b/2c5xkmf.jpg',
   PRIMARY KEY (`id_cliente`),
   INDEX `id_user` (`id_user` ASC) VISIBLE,
   CONSTRAINT `cliente_ibfk_1`
     FOREIGN KEY (`id_user`)
-    REFERENCES `dietariodb`.`usuario` (`id_user`))
+    REFERENCES `dietariodb`.`usuario` (`id_user`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb4
@@ -130,7 +137,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`dieta` (
   INDEX `id_cliente` (`id_cliente` ASC) VISIBLE,
   CONSTRAINT `dieta_ibfk_1`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `dietariodb`.`cliente` (`id_cliente`))
+    REFERENCES `dietariodb`.`cliente` (`id_cliente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb4
@@ -148,7 +157,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`ingesta` (
   INDEX `id_dieta` (`id_dieta` ASC) VISIBLE,
   CONSTRAINT `ingesta_ibfk_1`
     FOREIGN KEY (`id_dieta`)
-    REFERENCES `dietariodb`.`dieta` (`id_dieta`))
+    REFERENCES `dietariodb`.`dieta` (`id_dieta`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4
@@ -166,10 +177,13 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`ingesta_ingrediente` (
   INDEX `id_ingrediente` (`id_ingrediente` ASC) VISIBLE,
   CONSTRAINT `ingesta_ingrediente_ibfk_1`
     FOREIGN KEY (`id_ingesta`)
-    REFERENCES `dietariodb`.`ingesta` (`id_ingesta`),
+    REFERENCES `dietariodb`.`ingesta` (`id_ingesta`)
+    ON DELETE CASCADE,
   CONSTRAINT `ingesta_ingrediente_ibfk_2`
     FOREIGN KEY (`id_ingrediente`)
-    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`))
+    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -189,7 +203,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`macronutrientes` (
   INDEX `id_ingrediente` (`id_ingrediente` ASC) VISIBLE,
   CONSTRAINT `macronutrientes_ibfk_1`
     FOREIGN KEY (`id_ingrediente`)
-    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`))
+    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -214,7 +230,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`minerales` (
   INDEX `id_ingrediente` (`id_ingrediente` ASC) VISIBLE,
   CONSTRAINT `minerales_ibfk_1`
     FOREIGN KEY (`id_ingrediente`)
-    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`))
+    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -232,7 +250,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`peso` (
   INDEX `id_cliente` (`id_cliente` ASC) VISIBLE,
   CONSTRAINT `peso_ibfk_1`
     FOREIGN KEY (`id_cliente`)
-    REFERENCES `dietariodb`.`cliente` (`id_cliente`))
+    REFERENCES `dietariodb`.`cliente` (`id_cliente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -256,7 +276,9 @@ CREATE TABLE IF NOT EXISTS `dietariodb`.`vitaminas` (
   INDEX `id_ingrediente` (`id_ingrediente` ASC) VISIBLE,
   CONSTRAINT `vitaminas_ibfk_1`
     FOREIGN KEY (`id_ingrediente`)
-    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`))
+    REFERENCES `dietariodb`.`ingrediente` (`id_ingrediente`)
+    ON DELETE CASCADE
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -280,30 +302,75 @@ use dietariodb;
 -- Insertamos unos usuarios de prueba
 -- Añadimos un usuario de prueba
 --  User: Alberto   Password: prueba
-insert into usuario(nombre, apellidos, email, password,salt) values('alberto', "Velázquez Rapado", "alberto@dominio.com", 'PzUavOPQTKOVt+93Cak18sU+V2bT4+EDiE6jNVaToEPTAiZ8YSNrQNOHzHhSpkW/0DLi3PaaV7ubz5pDTysBSw==','Qp263kSTd3k7528W17LeAA==');
+insert into usuario(nombre, apellidos, email, password,salt) values('alberto', "Velázquez Rapado", "alberto@dominio.com", 'Y5CF9wdr0+viTA+jG9y5Cs6ndhpf/5blHMm/Vh+eTRWeqhetWBf3TyAugoBqk53Xmj4DKpzlmVJ0zM0WoIsj+A==','IFnr67IdjrCsTm5OPyJzSA==');
 --  User: paco   Password: paco
-insert into usuario(nombre, apellidos, email, password,salt) values('paco', "Fernández Carrión", "paco@dominio.com",'kmBGMbG6WpqcuInV78qzexXZhTx2GbyiWS6PkfRiZTwfwYtfsvSj/wwWbZd7HlHOiiMNG91twvDmpptrcHlw3g==','7lRje6+42fcNzZ7+qryPwQ==');
+insert into usuario(nombre, apellidos, email, password,salt) values('paco', "Fernández Carrión", "paco@dominio.com",'godxF230zv+Yr8zIDHjeaBAM5vSCnyC6TeL1FvhohEZAEcMBTQLc34TlHST4dCY2jKg6Gmvx42CnQPAg7NxUyQ==','bJqgBDpT+5yYLs6MwxzGpg==');
 --  User: antonio   Password: antonio
-insert into usuario(nombre, apellidos, email, password,salt) values('antonio', "Gómez García", "antonio@dominio.com",'aGCcrXmO/CDGNePGeKhAhvrjoG3ehEqkl856pc8Q2/S1u211ODsKjzzhZEpYWXVV9oQdOzTOUcnPXivcDRUSWA==','40qFNTeTvHGkrvdXKZ3KOA==');
+insert into usuario(nombre, apellidos, email, password,salt) values('antonio', "Gómez García", "antonio@dominio.com",'5zG7OxB/WZgf2vTLWS42c6PsC+dlRrz8eytu2TG5WMFq2uZknFWGeHABT3hbedCPGv5eaBx+7XB4dHeynmPP0w==','b1JSmJvYQr7Ow3uSSvS7BQ==');
 --  User: juan   Password: juan
-insert into usuario(nombre, apellidos, email, password,salt) values('juan', "Hernandez Salamanqués", "juan@dominio.com",'JUK/Fx2ORPk4ytotSl0TmP2LXgIFVMApNGmFjfHB8ETKcnLxc8POOYdVrZs41KXzjru1muif38bC8iOvsd+ZTQ==','Gdo4p53W5LlBShoCZDKAwQ==');
+insert into usuario(nombre, apellidos, email, password,salt) values('juan', "Hernandez Salamanqués", "juan@dominio.com",'q6phb1EeFxFWJy/B/32aHLOZRCaHRbtN4bnSjY8YrmoTK2yMvI+7TwqM29jTGpFapeDowCrsThnPKy6XnM0l7g==','d/Pej947wuAz4GT7HNyBhg==');
 
--- insertamos unos clientes a Alberto
-insert into cliente(id_user,nombre,apellidos) values((select id_user from usuario where nombre = "alberto"), "Jose Manuel", "Jiménez García");
-insert into cliente(id_user,nombre,apellidos) values((select id_user from usuario where nombre = "alberto"), "Mario", "Rodríguez Gil");
-insert into cliente(id_user,nombre,apellidos) values((select id_user from usuario where nombre = "alberto"), "Sonia", "García Fernández");
+-- insertamos unos clientes a Alberto (FALTAN POR AÑADIR LAS FECHAS DE NACIMIENTO!!)
+insert into cliente(id_user,nombre,apellidos,fecha_nacimiento) values((select id_user from usuario where nombre = "alberto"), "Jose Manuel", "Jiménez García","1992-02-26");
+insert into cliente(id_user,nombre,apellidos,fecha_nacimiento) values((select id_user from usuario where nombre = "alberto"), "Mario", "Rodríguez Gil","1995-03-12");
+insert into cliente(id_user,nombre,apellidos,fecha_nacimiento) values((select id_user from usuario where nombre = "alberto"), "Sonia", "García Fernández","1993-06-04");
 
 -- insertamos dietas a Jose Manuel
 insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-05", "1500");
 insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-06", "1375");
 insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-07", "1683");
 
+-- insertamos dietas a Mario
+insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Mario"), "2023-04-05", "1325");
+insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Mario"), "2023-04-06", "1562");
+insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Mario"), "2023-04-07", "1700");
+
+-- insertamos dietas a Sonia
+insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Sonia"), "2023-04-05", "1325");
+insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Sonia"), "2023-04-06", "1562");
+insert into dieta(id_cliente,fecha_dieta,objetivo) values((select id_cliente from cliente where nombre = "Sonia"), "2023-04-07", "1700");
+
 -- insertamos ingestas a las dietas de Jose Manuel
-insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05"), "desayuno");
-insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05"), "almuerzo");
-insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05"), "comida");
-insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05"), "merienda");
-insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05"), "cena");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")), "desayuno");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")), "almuerzo");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")), "comida");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")), "merienda");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")), "cena");
+
+-- insertamos ingestas a las dietas de Mario
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Mario")), "desayuno");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Mario")), "almuerzo");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Mario")), "comida");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Mario")), "merienda");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Mario")), "cena");
+
+-- insertamos ingestas a las dietas de Sonia
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Sonia")), "desayuno");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Sonia")), "almuerzo");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Sonia")), "comida");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Sonia")), "merienda");
+insert into ingesta(id_dieta,nombre) values((select id_dieta from dieta where fecha_dieta = "2023-04-05" and id_cliente = (select id_cliente from cliente where nombre = "Sonia")), "cena");
+
+-- Insertamos pesos
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-05", "90.01");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-06", "95.00");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-07", "88.00");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-08", "89.80");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-09", "93.00");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-10", "94.00");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-11", "97.60");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-12", "93.40");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Jose Manuel"), "2023-04-13", "95.00");
+
+-- Insertamos pesos a Mario
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Mario"), "2023-04-05", "71.02");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Mario"), "2023-04-06", "72.00");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Mario"), "2023-04-07", "73.50");
+
+-- Insertamos pesos a Sonia
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Sonia"), "2023-04-05", "60.75");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Sonia"), "2023-04-06", "61.00");
+insert into peso(id_cliente,fecha,peso) values((select id_cliente from cliente where nombre = "Sonia"), "2023-04-07", "60.52");
 
 -- insertamos todos los grupos alimentarios
 insert into grupo_alimentario(nombre_grupo) values("Pescados, mariscos y crustáceos");
@@ -2327,22 +2394,68 @@ insert into vitaminas(id_ingrediente,vit_a,vit_d,vit_e,vit_c,vit_b1,vit_b2,naici
 insert into vitaminas(id_ingrediente,vit_a,vit_d,vit_e,vit_c,vit_b1,vit_b2,naicina,vit_b6,vit_b12,ac_folico) values ((select id_ingrediente from ingrediente where nombre = "Ventresca de atún AO"),"0","0","0","0","0","0","0","0","0","0");
 
 
--- insertamos el desayuno por ejemplo
+-- insertamos el desayuno por ejemplo para Jose Manuel
 insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
 values (
-	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno"),
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")),
     (select id_ingrediente from ingrediente where nombre = "Leche de vaca, descremada"),
     "150"
 );
 insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
 values (
-	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno"),
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")),
     (select id_ingrediente from ingrediente where nombre = "Cacao en polvo, con azúcar, instantaneo"),
     "6"
 );
 insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
 values (
-	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno"),
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Jose Manuel")),
     (select id_ingrediente from ingrediente where nombre = "Galletas, tipo 'María'"),
     "140"
+);
+
+-- insertamos el desayuno por ejemplo para Mario
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Mario")),
+    (select id_ingrediente from ingrediente where nombre = "Leche de vaca, descremada"),
+    "150"
+);
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Mario")),
+    (select id_ingrediente from ingrediente where nombre = "Cacao en polvo, con azúcar, instantaneo"),
+    "6"
+);
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Mario")),
+    (select id_ingrediente from ingrediente where nombre = "Galletas, tipo 'María'"),
+    "140"
+);
+
+-- insertamos el desayuno por ejemplo para Sonia
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Sonia")),
+    (select id_ingrediente from ingrediente where nombre = "Leche de vaca, descremada"),
+    "150"
+);
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Sonia")),
+    (select id_ingrediente from ingrediente where nombre = "Cacao en polvo, con azúcar, instantaneo"),
+    "6"
+);
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Sonia")),
+    (select id_ingrediente from ingrediente where nombre = "Galletas, tipo 'María'"),
+    "140"
+);
+insert into ingesta_ingrediente(id_ingesta,id_ingrediente,cantidad) 
+values (
+	(select i.id_ingesta from dieta d inner join ingesta i on d.id_dieta = i.id_dieta where fecha_dieta = "2023-04-05" and i.nombre = "desayuno" and d.id_cliente = (select id_cliente from cliente where nombre = "Sonia")),
+    (select id_ingrediente from ingrediente where nombre = "Dorada"),
+    "25"
 );
