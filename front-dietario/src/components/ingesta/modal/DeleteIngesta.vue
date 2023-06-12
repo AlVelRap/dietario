@@ -1,6 +1,6 @@
 <template>
   <div
-    id="deleteIngesta"
+    :id="`deleteIngesta-${id_ingesta}`"
     class="modal fade"
     tabindex="-1"
     aria-labelledby="deleteIngesta-label"

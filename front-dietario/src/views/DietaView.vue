@@ -6,11 +6,7 @@
       </div>
     </div>
     <div class="float-end my-3">
-      <button
-        class="btn btn-primary btn-round"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteDieta"
-      >
+      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteDieta">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
@@ -35,24 +31,15 @@
           <div class="row text-center justify-content-md-center">
             <div class="col-md-4 col-lg-2">
               Grasas
-              <GraficoIngesta
-                id_grafico="graficoLipidos"
-                :chartData="dataLip"
-              ></GraficoIngesta>
+              <GraficoIngesta id_grafico="graficoLipidos" :chartData="dataLip"></GraficoIngesta>
             </div>
             <div class="col-md-4 col-lg-2">
               HdC
-              <GraficoIngesta
-                id_grafico="graficoHdc"
-                :chartData="dataHdc"
-              ></GraficoIngesta>
+              <GraficoIngesta id_grafico="graficoHdc" :chartData="dataHdc"></GraficoIngesta>
             </div>
             <div class="col-md-4 col-lg-2">
               Proteínas
-              <GraficoIngesta
-                id_grafico="graficoProteinas"
-                :chartData="dataProte"
-              ></GraficoIngesta>
+              <GraficoIngesta id_grafico="graficoProteinas" :chartData="dataProte"></GraficoIngesta>
             </div>
           </div>
         </div>
@@ -62,26 +49,22 @@
       <div class="col-md-12 col-lg-6">
         <div class="accordion accordion-flush" id="ingestas">
           <div class="accordion-item" v-for="ingesta in ingestas">
-            <IngestaAccordeon
-              :ingesta="ingesta"
-              @emit-datos-ingesta="getDatosIngestas"
-            ></IngestaAccordeon>
+            <IngestaAccordeon :ingesta="ingesta" :key="`ingesta-${ingesta.id_ingesta}`"
+              @update-ingesta="getData">
+            </IngestaAccordeon>
           </div>
         </div>
       </div>
       <div class="row my-3 justify-content-md-center">
         <div class="col-md-12 col-lg-5 text-center">
-          <button
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#addIngesta"
-          >
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIngesta">
             Añadir Ingesta
           </button>
         </div>
 
         <!-- ver como referescar los componentes esta es una muy mala aprximacion -->
-        <AddIngesta @update-ingesta="$router.go" />
+        <!-- <AddIngesta @update-ingesta="$router.go" /> -->
+        <AddIngesta @update-ingesta="getData" />
         <DeleteDieta />
       </div>
     </div>
@@ -91,7 +74,7 @@
 import { defineComponent } from "vue";
 // Componentes
 import HeaderDieta from "@/components/dietas/HeaderDieta.vue";
-import IngestaAccordeon from "@/components/dietas/IngestaAccordeon.vue";
+import IngestaAccordeon from "@/components/ingesta/IngestaAccordeon.vue";
 import AddIngesta from "@/components/ingesta/modal/AddIngesta.vue";
 import DeleteDieta from "@/components/dietas/modal/DeleteDieta.vue";
 // Servicios
@@ -165,11 +148,10 @@ export default defineComponent({
   },
   watch: {
     $route() {
-      this.objetivoKcal = 0;
-      this.realKcal = 0;
-      this.diffKcall = 0;
+      if(!this.$route.params.id_dieta) return
       this.getData();
     },
+
   },
   methods: {
     getData() {
@@ -178,9 +160,52 @@ export default defineComponent({
         Number(this.$route.params.id_dieta)
       ).then((dieta: Dieta) => {
         if (!dieta) return;
+        // console.log(dieta)
         const fechaString = new Date(dieta.fecha_dieta);
         this.fecha = fechaString.toLocaleDateString("es-ES");
         this.objetivoKcal = dieta.objetivo;
+        this.realKcal = dieta.energiaTotal ? dieta.energiaTotal : 0
+        this.diffKcall = this.objetivoKcal - this.realKcal
+        this.totalLipidos = dieta.lipidosTotal ? dieta.lipidosTotal : 0
+        this.totalHdC = dieta.hdcTotal ? dieta.hdcTotal : 0
+        this.totalProteinas = dieta.proteinasTotal ? dieta.proteinasTotal : 0
+        this.dataLip = {
+          datasets: [
+            {
+              label: "% Grasa",
+              backgroundColor: ["#F6ED01", "#D9D9D9"],
+              data: [
+                ((this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
+                (1 - (this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
+              ],
+            },
+          ],
+        };
+        this.dataHdc = {
+          datasets: [
+            {
+              label: "% HdC",
+              backgroundColor: ["#44B81B", "#D9D9D9"],
+              data: [
+                ((this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
+                (1 - (this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
+              ],
+            },
+          ],
+        };
+        this.dataProte = {
+          datasets: [
+            {
+              label: "% Proteinas",
+              backgroundColor: ["#B81B1B", "#D9D9D9"],
+              data: [
+                ((this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) * 100,
+                (1 - (this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) *
+                100,
+              ],
+            },
+          ],
+        };
         ClienteService.getOne(dieta.id_cliente).then((cliente: Cliente) => {
           this.usuario = cliente.nombre;
         });
@@ -188,54 +213,55 @@ export default defineComponent({
 
       IngestaService.getAll(Number(this.$route.params.id_dieta)).then(
         (ingestas: Ingesta[]) => {
+          console.log(ingestas)
           this.ingestas = ingestas;
         }
       );
     },
-    getDatosIngestas(macros: Macronutrientes) {
-      this.realKcal += macros.energia;
-      this.diffKcall = this.objetivoKcal - this.realKcal;
-      this.totalLipidos += macros.lipidos;
-      this.dataLip = {
-        datasets: [
-          {
-            label: "% Grasa",
-            backgroundColor: ["#F6ED01", "#D9D9D9"],
-            data: [
-              ((this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
-              (1 - (this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
-            ],
-          },
-        ],
-      };
-      this.totalHdC += macros.hdc;
-      this.dataHdc = {
-        datasets: [
-          {
-            label: "% HdC",
-            backgroundColor: ["#44B81B", "#D9D9D9"],
-            data: [
-              ((this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
-              (1 - (this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
-            ],
-          },
-        ],
-      };
-      this.totalProteinas += macros.proteinas;
-      this.dataProte = {
-        datasets: [
-          {
-            label: "% Proteinas",
-            backgroundColor: ["#B81B1B", "#D9D9D9"],
-            data: [
-              ((this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) * 100,
-              (1 - (this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) *
-                100,
-            ],
-          },
-        ],
-      };
-    },
+    // getDatosIngestas(macros: Macronutrientes) {
+    //   this.realKcal += macros.energia;
+    //   this.diffKcall = this.objetivoKcal - this.realKcal;
+    //   this.totalLipidos += macros.lipidos;
+    //   this.dataLip = {
+    //     datasets: [
+    //       {
+    //         label: "% Grasa",
+    //         backgroundColor: ["#F6ED01", "#D9D9D9"],
+    //         data: [
+    //           ((this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
+    //           (1 - (this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
+    //         ],
+    //       },
+    //     ],
+    //   };
+    //   this.totalHdC += macros.hdc;
+    //   this.dataHdc = {
+    //     datasets: [
+    //       {
+    //         label: "% HdC",
+    //         backgroundColor: ["#44B81B", "#D9D9D9"],
+    //         data: [
+    //           ((this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
+    //           (1 - (this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
+    //         ],
+    //       },
+    //     ],
+    //   };
+    //   this.totalProteinas += macros.proteinas;
+    //   this.dataProte = {
+    //     datasets: [
+    //       {
+    //         label: "% Proteinas",
+    //         backgroundColor: ["#B81B1B", "#D9D9D9"],
+    //         data: [
+    //           ((this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) * 100,
+    //           (1 - (this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) *
+    //           100,
+    //         ],
+    //       },
+    //     ],
+    //   };
+    // },
     deleteDieta() {
       dietaService
         .delete(

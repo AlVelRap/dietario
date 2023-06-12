@@ -23,7 +23,19 @@ Dieta.create = (nuevaDieta, result) => {
 
 Dieta.findById = (id_cliente, id_dieta, result) => {
   conn.query(
-    `SELECT * FROM dieta WHERE id_cliente = ? and id_dieta = ?`,
+    // `SELECT * FROM dieta WHERE id_cliente = ? and id_dieta = ?`,
+    "SELECT d.id_dieta, d.id_cliente, d.fecha_dieta, d.objetivo, " +
+      "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
+      "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
+      "COALESCE(sum(m.hdc*ii.cantidad/100),0) as hdcTotal, " +
+      "COALESCE(sum(m.fibra*ii.cantidad/100),0) as fibraTotal, " +
+      "COALESCE(sum(m.lipidos*ii.cantidad/100),0) as lipidosTotal " +
+      "FROM dieta d " +
+      "left join ingesta i on d.id_dieta=i.id_dieta " +
+      "left join ingesta_ingrediente ii on i.id_ingesta=ii.id_ingesta " +
+      "left join macronutrientes m on ii.id_ingrediente = m.id_ingrediente " +
+      "where d.id_cliente = ? and d.id_dieta = ? " +
+      "group by d.id_dieta;",
     [id_cliente, id_dieta],
     (err, res) => {
       if (err) {
@@ -45,10 +57,26 @@ Dieta.findById = (id_cliente, id_dieta, result) => {
 };
 
 Dieta.getAll = (id_cliente, result) => {
-  let query = "SELECT * FROM dieta WHERE id_cliente = ? ORDER BY fecha_dieta DESC";
+  //// REVISAR ESTO!!!! De momento solo devolvemos los totales en la individual, aqui no porque no
+  // veo que haga falta
+  let query =
+    // "SELECT * FROM dieta WHERE id_cliente = ? ORDER BY fecha_dieta DESC";
+    "SELECT d.id_dieta, d.id_cliente, d.fecha_dieta, d.objetivo, " +
+    "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
+    "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
+    "COALESCE(sum(m.hdc*ii.cantidad/100),0) as hdcTotal, " +
+    "COALESCE(sum(m.fibra*ii.cantidad/100),0) as fibraTotal, " +
+    "COALESCE(sum(m.lipidos*ii.cantidad/100),0) as lipidosTotal " +
+    "FROM dieta d " +
+    "left join ingesta i on d.id_dieta=i.id_dieta " +
+    "left join ingesta_ingrediente ii on i.id_ingesta=ii.id_ingesta " +
+    "left join macronutrientes m on ii.id_ingrediente = m.id_ingrediente " +
+    "where d.id_cliente = ? " +
+    "group by d.id_dieta " +
+    "ORDER BY d.fecha_dieta DESC;";
 
   conn.query(query, [id_cliente], (err, res) => {
-    console.log(query)
+    console.log(query);
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -63,12 +91,7 @@ Dieta.getAll = (id_cliente, result) => {
 Dieta.updateById = (id_dieta, dieta, result) => {
   conn.query(
     "UPDATE dieta SET id_cliente = ?, fecha_dieta = ?, objetivo = ? WHERE id_dieta = ?;",
-    [
-      dieta.id_cliente,
-      dieta.fecha_dieta,
-      dieta.objetivo,
-      id_dieta,
-    ],
+    [dieta.id_cliente, dieta.fecha_dieta, dieta.objetivo, id_dieta],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -94,7 +117,7 @@ Dieta.updateById = (id_dieta, dieta, result) => {
 Dieta.remove = (id_cliente, id_dieta, result) => {
   conn.query(
     "DELETE FROM dieta WHERE id_cliente = ? AND id_dieta = ?",
-    [id_cliente,id_dieta],
+    [id_cliente, id_dieta],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

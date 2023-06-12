@@ -79,8 +79,9 @@ export default defineComponent({
         nombre: this.nombre,
       };
       IngestaService.post(data).then((response) => {
+        console.log(response)
         if (response) {
-          this.$emit("updateIngestas");
+          this.$emit("updateIngesta");
         }
       });
     },

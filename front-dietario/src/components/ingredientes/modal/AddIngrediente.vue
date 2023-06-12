@@ -120,7 +120,7 @@ export default defineComponent({
       };
       ingestaIngredienteService.post(data).then((response) => {
         if (response) {
-          this.$emit("updateIngesta");
+          this.$emit("addIngrediente");
         }
       });
     },
@@ -128,6 +128,6 @@ export default defineComponent({
   beforeMount() {
     this.getIngredientes();
   },
-  emits: ["updateIngesta"],
+  emits: ["addIngrediente"],
 });
 </script>

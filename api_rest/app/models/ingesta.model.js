@@ -22,7 +22,18 @@ Ingesta.create = (nuevoIngesta, result) => {
 
 Ingesta.findById = (id_dieta, id_ingesta, result) => {
   conn.query(
-    `SELECT * FROM ingesta WHERE id_dieta = ? and id_ingesta = ?`,
+    // `SELECT * FROM ingesta WHERE id_dieta = ? and id_ingesta = ?`,
+    "SELECT i.id_ingesta, i.id_dieta, i.nombre, " +
+      "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
+      "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
+      "COALESCE(sum(m.hdc*ii.cantidad/100),0) as hdcTotal, " +
+      "COALESCE(sum(m.fibra*ii.cantidad/100),0) as fibraTotal, " +
+      "COALESCE(sum(m.lipidos*ii.cantidad/100),0) as lipidosTotal " +
+      "FROM ingesta i  " +
+      "left join ingesta_ingrediente ii on i.id_ingesta=ii.id_ingesta " +
+      "left join macronutrientes m on ii.id_ingrediente = m.id_ingrediente " +
+      "where i.id_ingesta = ? and i.id_dieta = ? " +
+      "group by i.id_ingesta;",
     [id_dieta, id_ingesta],
     (err, res) => {
       if (err) {
@@ -44,7 +55,18 @@ Ingesta.findById = (id_dieta, id_ingesta, result) => {
 };
 
 Ingesta.getAll = (id_dieta, result) => {
-  let query = "SELECT * FROM ingesta WHERE id_dieta = ?";
+  // let query = "SELECT * FROM ingesta WHERE id_dieta = ?";
+  let query ="SELECT i.id_ingesta, i.id_dieta, i.nombre, " +
+      "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
+      "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
+      "COALESCE(sum(m.hdc*ii.cantidad/100),0) as hdcTotal, " +
+      "COALESCE(sum(m.fibra*ii.cantidad/100),0) as fibraTotal, " +
+      "COALESCE(sum(m.lipidos*ii.cantidad/100),0) as lipidosTotal " +
+      "FROM ingesta i  " +
+      "left join ingesta_ingrediente ii on i.id_ingesta=ii.id_ingesta " +
+      "left join macronutrientes m on ii.id_ingrediente = m.id_ingrediente " +
+      "where i.id_dieta = ? " +
+      "group by i.id_ingesta;"
 
   conn.query(query, [id_dieta], (err, res) => {
     if (err) {
@@ -61,11 +83,7 @@ Ingesta.getAll = (id_dieta, result) => {
 Ingesta.updateById = (id_ingesta, ingesta, result) => {
   conn.query(
     "UPDATE ingesta SET id_dieta = ?, nombre = ? WHERE id_ingesta = ?;",
-    [
-      ingesta.id_dieta,
-      ingesta.nombre,
-      id_ingesta,
-    ],
+    [ingesta.id_dieta, ingesta.nombre, id_ingesta],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -88,10 +106,10 @@ Ingesta.updateById = (id_ingesta, ingesta, result) => {
   );
 };
 
-Ingesta.remove = (id_dieta,id_ingesta, result) => {
+Ingesta.remove = (id_dieta, id_ingesta, result) => {
   conn.query(
     "DELETE FROM ingesta WHERE id_dieta = ? AND id_ingesta = ?",
-    [id_dieta,id_ingesta],
+    [id_dieta, id_ingesta],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -112,16 +130,20 @@ Ingesta.remove = (id_dieta,id_ingesta, result) => {
 };
 
 Ingesta.removeAll = (id_dieta, result) => {
-  conn.query("DELETE FROM ingesta WHERE id_dieta = ?", [id_dieta], (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
+  conn.query(
+    "DELETE FROM ingesta WHERE id_dieta = ?",
+    [id_dieta],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
 
-    console.log(`Se han borrado ${res.affectedRows} ingestas`);
-    result(null, res);
-  });
+      console.log(`Se han borrado ${res.affectedRows} ingestas`);
+      result(null, res);
+    }
+  );
 };
 
 module.exports = Ingesta;
