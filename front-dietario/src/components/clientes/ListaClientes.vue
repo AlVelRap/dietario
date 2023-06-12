@@ -5,7 +5,7 @@
         <h1>Clientes</h1>
       </div>
     </div>
-    <div class="row">
+    <div class="row" data-bs-dismiss="offcanvas">
       <div class="col">
         <div class="container">
           <hr />

@@ -125,10 +125,10 @@
         </div>
       </div>
     </div>
-    <AddDieta @update-dieta="$router.go"></AddDieta>
+    <AddDieta @update-dieta="getDietas"></AddDieta>
     <EditCliente
       :cliente="dataCliente"
-      @update-cliente="$router.go"
+      @update-cliente="getClientes"
     ></EditCliente>
     <DeleteCliente></DeleteCliente>
   </div>

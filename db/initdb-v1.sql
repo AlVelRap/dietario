@@ -310,7 +310,7 @@ insert into usuario(nombre, apellidos, email, password,salt) values('antonio', "
 --  User: juan   Password: juan
 insert into usuario(nombre, apellidos, email, password,salt) values('juan', "Hernandez Salamanqués", "juan@dominio.com",'q6phb1EeFxFWJy/B/32aHLOZRCaHRbtN4bnSjY8YrmoTK2yMvI+7TwqM29jTGpFapeDowCrsThnPKy6XnM0l7g==','d/Pej947wuAz4GT7HNyBhg==');
 
--- insertamos unos clientes a Alberto (FALTAN POR AÑADIR LAS FECHAS DE NACIMIENTO!!)
+-- insertamos unos clientes a Alberto
 insert into cliente(id_user,nombre,apellidos,fecha_nacimiento) values((select id_user from usuario where nombre = "alberto"), "Jose Manuel", "Jiménez García","1992-02-26");
 insert into cliente(id_user,nombre,apellidos,fecha_nacimiento) values((select id_user from usuario where nombre = "alberto"), "Mario", "Rodríguez Gil","1995-03-12");
 insert into cliente(id_user,nombre,apellidos,fecha_nacimiento) values((select id_user from usuario where nombre = "alberto"), "Sonia", "García Fernández","1993-06-04");

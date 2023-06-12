@@ -11,12 +11,12 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="input-cliente" class="form-label">Nombre</label>
+              <label for="add-nombre-cliente" class="form-label">Nombre</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   class="form-control"
-                  id="nombre-cliente"
+                  id="add-nombre-cliente"
                   aria-describedby="icon-input-cliente"
                   aria-label="Añadir nombre cliente"
                   v-model="nombre"
@@ -29,14 +29,14 @@
               </div>
             </div>
             <div class="mb-3">
-              <label for="apellidos-cliente" class="form-label"
+              <label for="add-apellidos-cliente" class="form-label"
                 >Apellidos</label
               >
               <div class="input-group mb-3">
                 <input
                   type="text"
                   class="form-control"
-                  id="apellidos-cliente"
+                  id="add-apellidos-cliente"
                   aria-describedby="icon-input-cliente"
                   aria-label="Añadir apellidos cliente"
                   v-model="apellidos"
@@ -49,14 +49,14 @@
               </div>
             </div>
             <div class="mb-3">
-              <label for="fecha-nac-cliente" class="form-label"
+              <label for="add-fecha-nac-cliente" class="form-label"
                 >Fecha Nacimiento</label
               >
               <div class="input-group mb-3">
                 <input
                   type="date"
                   class="form-control"
-                  id="fecha-nac-cliente"
+                  id="add-fecha-nac-cliente"
                   aria-describedby="icon-input-cliente"
                   aria-label="Añadir fecha nacimiento cliente"
                   v-model="fecha_nac"
@@ -74,7 +74,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="imagen-cliente"
+                  id="add-imagen-cliente"
                   aria-describedby="icon-input-cliente"
                   aria-label="Añadir imagen de perfil del cliente"
                   v-model="url"
