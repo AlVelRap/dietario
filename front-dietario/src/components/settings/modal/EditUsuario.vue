@@ -119,7 +119,7 @@ export default defineComponent({
         if(data){
           this.$emit("updateUsuario")
         }
-        // console.log(data)
+
       });
     },
   },

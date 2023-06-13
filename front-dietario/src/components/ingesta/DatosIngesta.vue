@@ -86,12 +86,7 @@ export default defineComponent({
       IngestaIngredienteService.getAll(Number(this.ingestaProp.id_ingesta)).then(
         (data: IngestaIngrediente[]) => {
           if (!data) return;
-          // this.totalKcal = 0;
-          // this.totalLipidos = 0;
-          // this.totalHdC = 0;
-          // this.totalProteinas = 0;
           this.ingesta = data;
-          // this.getDataIngredientes();
         }
       );
     },
@@ -99,65 +94,6 @@ export default defineComponent({
       this.getIngestaData()
       this.$emit("updateIngesta")
     }
-    // getDataIngredientes(macros: Macronutrientes) {
-    //   // getDataIngredientes() {
-    //   // this.totalKcal = 0;
-    //   // this.totalFibra = 0;
-    //   // this.totalLipidos = 0;
-    //   // this.totalHdC = 0;
-    //   // this.totalProteinas = 0;
-
-    //   // IngestaIngredienteService.getAll(Number(this.id_ingesta)).then(
-    //   //   (data: IngestaIngrediente[]) => {
-    //   //     console.log(data)
-    //   //     data.forEach((ingestaIngrediente: IngestaIngrediente) => {
-    //   //       // console.log(ingestaIngrediente)
-    //   //       macronutrientesService
-    //   //         .getOne(ingestaIngrediente.id_ingrediente)
-    //   //         .then((ingrediente: Macronutrientes) => {
-    //   //           this.totalKcal +=
-    //   //             (ingrediente.energia * ingestaIngrediente.cantidad) / 100;
-    //   //           this.totalFibra +=
-    //   //             (ingrediente.fibra * ingestaIngrediente.cantidad) / 100;
-    //   //           this.totalLipidos +=
-    //   //             (ingrediente.lipidos * ingestaIngrediente.cantidad) / 100;
-    //   //           this.totalHdC +=
-    //   //             (ingrediente.hdc * ingestaIngrediente.cantidad) / 100;
-    //   //           this.totalProteinas +=
-    //   //             (ingrediente.proteinas * ingestaIngrediente.cantidad) / 100;
-    //   //           const macrosEmitir: Macronutrientes = {
-    //   //             id_ingrediente: undefined,
-    //   //             porcion_comestible: undefined,
-    //   //             fibra: this.totalFibra,
-    //   //             energia: this.totalKcal,
-    //   //             lipidos: this.totalLipidos,
-    //   //             hdc: this.totalHdC,
-    //   //             proteinas: this.totalProteinas,
-    //   //           };
-    //   //           // console.log(this.totalKcal)
-    //   //           this.$emit("emitKcal", macrosEmitir);
-    //   //         });
-    //   //     });
-    //   //   }
-    //   // );
-    //   // Recuerda, estas macros que recibes no son las de la DB,
-    //   // son las calculadas
-    //   // console.log(macros.energia)
-    //   this.totalKcal += macros.energia;
-    //   this.totalLipidos += macros.lipidos;
-    //   this.totalHdC += macros.hdc;
-    //   this.totalProteinas += macros.proteinas;
-    //   const macrosEmitir: Macronutrientes = {
-    //     id_ingrediente: undefined,
-    //     porcion_comestible: undefined,
-    //     fibra: this.totalFibra,
-    //     energia: this.totalKcal,
-    //     lipidos: this.totalLipidos,
-    //     hdc: this.totalHdC,
-    //     proteinas: this.totalProteinas,
-    //   };
-    //   this.$emit("emitKcal", macrosEmitir);
-    // },
   },
   emits: ["emitKcal", "deleteIngesta", "updateIngesta"],
   mounted() {

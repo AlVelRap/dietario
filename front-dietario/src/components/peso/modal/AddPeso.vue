@@ -93,7 +93,6 @@ export default defineComponent({
       };
 
       pesoService.post(data).then((response) => {
-        // console.log(response);
         if (response) {
           this.$emit("updatePeso");
         }

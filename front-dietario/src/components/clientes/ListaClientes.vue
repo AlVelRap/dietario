@@ -66,13 +66,8 @@ export default defineComponent({
   methods: {
     getClientes() {
       ClienteService.getAll().then((data) => {
-        // console.log(data);
         this.listaClientes = data;
       });
-      // .then((usuarios: ResponseData) => {
-      //   console.log(usuarios.data);
-      //   // this.usuarios_lista = usuarios;
-      // });
     },
   },
   mounted() {

@@ -95,7 +95,6 @@ export default defineComponent({
       };
 
       DietaService.post(data).then((response) => {
-        // console.log(response);
         if (response) {
           this.$emit("updateDieta");
         }

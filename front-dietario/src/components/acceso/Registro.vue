@@ -151,9 +151,7 @@ export default defineComponent({
         password: this.password,
         salt: undefined,
       };
-      console.log(data);
       UsuarioService.register(data).then((res) => {
-        // console.log(res)
         // localStorage.setItem("token", res.token);
       });
     },

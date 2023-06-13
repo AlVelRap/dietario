@@ -106,9 +106,7 @@ export default defineComponent({
         id_ingesta: this.id_ingesta,
         cantidad: this.cantidad,
       };
-      console.log(data)
       ingestaIngredienteService.post(data).then((response) => {
-        console.log(response)
         if (response) {
           this.$emit("addIngrediente");
         }
@@ -122,8 +120,7 @@ export default defineComponent({
       })
     },
     getIngredientesGrupo(event: Event) {
-      const id_grupo = event.target.value
-      console.log(id_grupo)
+      const id_grupo = Number((event.target as HTMLSelectElement).value)
       if (id_grupo != 0) {
         ingredienteService.getAll({ params: { id_grupo: id_grupo } }).then((ingredientes: Ingrediente[]) => {
           this.ingredientes = ingredientes;

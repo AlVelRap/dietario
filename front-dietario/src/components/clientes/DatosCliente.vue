@@ -183,7 +183,6 @@ export default defineComponent({
         ? id_cliente
         : Number(this.$route.params.id_cliente);
       ClienteService.getOne(id_cliente).then((data) => {
-        // console.log(data);
         this.dataCliente = data;
         this.getEdad();
       });
@@ -193,7 +192,6 @@ export default defineComponent({
         ? id_cliente
         : Number(this.$route.params.id_cliente);
       DietaService.getAll(id_cliente).then((data) => {
-        // console.log(data);
         this.dietasCliente = data;
       });
     },
@@ -202,7 +200,6 @@ export default defineComponent({
         ? id_cliente
         : Number(this.$route.params.id_cliente);
       PesoService.getAll(id_cliente).then((data) => {
-        // console.log(data);
         this.pesosCliente = data;
         this.getLastPeso();
         this.graphicPeso();

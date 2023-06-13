@@ -49,8 +49,7 @@
       <div class="col-md-12 col-lg-6">
         <div class="accordion accordion-flush" id="ingestas">
           <div class="accordion-item" v-for="ingesta in ingestas">
-            <IngestaAccordeon :ingesta="ingesta" :key="`ingesta-${ingesta.id_ingesta}`"
-              @update-ingesta="getData">
+            <IngestaAccordeon :ingesta="ingesta" :key="`ingesta-${ingesta.id_ingesta}`" @update-ingesta="getData">
             </IngestaAccordeon>
           </div>
         </div>
@@ -148,7 +147,7 @@ export default defineComponent({
   },
   watch: {
     $route() {
-      if(!this.$route.params.id_dieta) return
+      if (!this.$route.params.id_dieta) return
       this.getData();
     },
 
@@ -160,7 +159,6 @@ export default defineComponent({
         Number(this.$route.params.id_dieta)
       ).then((dieta: Dieta) => {
         if (!dieta) return;
-        // console.log(dieta)
         const fechaString = new Date(dieta.fecha_dieta);
         this.fecha = fechaString.toLocaleDateString("es-ES");
         this.objetivoKcal = dieta.objetivo;
@@ -213,55 +211,10 @@ export default defineComponent({
 
       IngestaService.getAll(Number(this.$route.params.id_dieta)).then(
         (ingestas: Ingesta[]) => {
-          console.log(ingestas)
           this.ingestas = ingestas;
         }
       );
     },
-    // getDatosIngestas(macros: Macronutrientes) {
-    //   this.realKcal += macros.energia;
-    //   this.diffKcall = this.objetivoKcal - this.realKcal;
-    //   this.totalLipidos += macros.lipidos;
-    //   this.dataLip = {
-    //     datasets: [
-    //       {
-    //         label: "% Grasa",
-    //         backgroundColor: ["#F6ED01", "#D9D9D9"],
-    //         data: [
-    //           ((this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
-    //           (1 - (this.totalLipidos * ENERGIA_LIPIDO) / this.realKcal) * 100,
-    //         ],
-    //       },
-    //     ],
-    //   };
-    //   this.totalHdC += macros.hdc;
-    //   this.dataHdc = {
-    //     datasets: [
-    //       {
-    //         label: "% HdC",
-    //         backgroundColor: ["#44B81B", "#D9D9D9"],
-    //         data: [
-    //           ((this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
-    //           (1 - (this.totalHdC * ENERGIA_HDC) / this.realKcal) * 100,
-    //         ],
-    //       },
-    //     ],
-    //   };
-    //   this.totalProteinas += macros.proteinas;
-    //   this.dataProte = {
-    //     datasets: [
-    //       {
-    //         label: "% Proteinas",
-    //         backgroundColor: ["#B81B1B", "#D9D9D9"],
-    //         data: [
-    //           ((this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) * 100,
-    //           (1 - (this.totalProteinas * ENERGIA_PROTEINA) / this.realKcal) *
-    //           100,
-    //         ],
-    //       },
-    //     ],
-    //   };
-    // },
     deleteDieta() {
       dietaService
         .delete(
@@ -281,10 +234,11 @@ export default defineComponent({
         });
     },
     updateDieta(e: Event) {
-      if (!e.target) return;
-      if (!Number(e.target.innerText)) return;
 
-      const objetivo = Number(e.target.innerText);
+      if (!e.target) return;
+      if (!Number((e.target as HTMLDataElement).innerText)) return;
+
+      const objetivo = Number((e.target as HTMLDataElement).innerText);
       const idDieta = Number(this.$route.params.id_dieta);
       const idCliente = Number(this.$route.params.id_cliente);
 
@@ -301,14 +255,12 @@ export default defineComponent({
         objetivo: objetivo,
       };
       dietaService.update(idDieta, data).then((response: ResponseData) => {
-        // console.log(response)
         if (response) {
-          // Ver para actualizar los componentes
+          this.getData()
         }
       });
     },
   },
-  // emits: ["deleteDieta"],
   mounted() {
     this.getData();
   },

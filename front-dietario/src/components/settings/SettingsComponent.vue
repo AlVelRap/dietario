@@ -94,8 +94,7 @@ export default defineComponent({
         if (usuario.nombre && usuario.apellidos) {
           this.nombre = usuario.nombre;
           this.apellidos = usuario.apellidos;
-          this.correo = usuario.email;
-          // console.log(usuario)
+          this.correo = usuario.email?usuario.email:"";
         }
       });
     },
