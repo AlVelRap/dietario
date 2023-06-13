@@ -25,10 +25,10 @@
           <li class="nav-item">
             <router-link to="/" class="nav-link text-white">Inicio</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="auth">
             <router-link to="/cliente" class="nav-link text-white">Clientes</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="auth">
             <router-link to="/settings" class="nav-link text-white">Settings</router-link>
           </li>
         </ul>
