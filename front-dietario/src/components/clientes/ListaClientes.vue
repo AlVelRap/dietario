@@ -20,7 +20,7 @@
               style="text-decoration: none; color: black"
             >
               <div class="row ms-3 me-2">
-                <div class="col-11">
+                <div class="col-10">
                   {{ cliente.nombre }} {{ cliente.apellidos }}
                 </div>
                 <div class="col-1">
@@ -46,7 +46,7 @@
     </div>
   </div>
   <!-- ver como referescar los componentes esta es una muy mala aprximacion -->
-  <AddCliente @update-cliente="$router.go" />
+  <!-- <AddCliente @update-cliente="getClientes" /> -->
 </template>
 
 <script lang="ts">
@@ -64,7 +64,7 @@ export default defineComponent({
   },
   components: { AddCliente },
   methods: {
-    getClientes(id_user: string) {
+    getClientes() {
       ClienteService.getAll().then((data) => {
         // console.log(data);
         this.listaClientes = data;
@@ -76,7 +76,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.getClientes("a");
+    this.getClientes();
   },
 });
 </script>

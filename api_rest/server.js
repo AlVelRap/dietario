@@ -37,6 +37,7 @@ require("./app/routes/acidos_grasos.route")(app);
 require("./app/routes/macronutrientes.route")(app);
 require("./app/routes/minerales.route")(app);
 require("./app/routes/vitaminas.route")(app);
+require("./app/routes/grupo_alimentario.route")(app);
 
 // set port, listen for requests
 const PORT = process.env.NODE_DOCKER_PORT || 3000;

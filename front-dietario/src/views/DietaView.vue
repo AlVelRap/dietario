@@ -29,15 +29,15 @@
       <div class="col-md-12 col-lg-10">
         <div class="container">
           <div class="row text-center justify-content-md-center">
-            <div class="col-md-4 col-lg-2">
+            <div class="col-4 col-md-3 col-lg-2">
               Grasas
               <GraficoIngesta id_grafico="graficoLipidos" :chartData="dataLip"></GraficoIngesta>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-4 col-md-3 col-lg-2">
               HdC
               <GraficoIngesta id_grafico="graficoHdc" :chartData="dataHdc"></GraficoIngesta>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-4 col-md-3 col-lg-2">
               Proteínas
               <GraficoIngesta id_grafico="graficoProteinas" :chartData="dataProte"></GraficoIngesta>
             </div>

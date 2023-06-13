@@ -1,21 +1,21 @@
 import http from "./http-comun";
 import type ResponseData from "@/types/ResponseData";
 
-class IngredienteService {
-  getOne(id_ingrediente: number): Promise<any> {
+class GrupoAlimentarioService {
+  getOne(id_grupo: number): Promise<any> {
     return http
-      .get(`/ingrediente/${id_ingrediente}`)
+      .get(`/grupo_alimentario/${id_grupo}`)
       .then((response: ResponseData) => {
         return response.data;
       });
   }
-  getAll(params?: object): Promise<any> {
+  getAll(): Promise<any> {
     return http
-      .get(`/ingrediente/`, params)
+      .get(`/grupo_alimentario/`)
       .then((response: ResponseData) => {
         return response.data;
       });
   }
 }
 
-export default new IngredienteService();
+export default new GrupoAlimentarioService();

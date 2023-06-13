@@ -44,5 +44,19 @@ Ingrediente.getAll = (result) => {
     result(null, res);
   });
 };
+Ingrediente.getAllByGrupo = (id_grupo, result) => {
+  let query = "SELECT * FROM ingrediente WHERE id_grupo = ?;";
+
+  conn.query(query, [id_grupo], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("ingredientes: ", res);
+    result(null, res);
+  });
+};
 
 module.exports = Ingrediente;
