@@ -1,11 +1,5 @@
 <template>
-  <div
-    id="editCliente"
-    class="modal fade"
-    tabindex="-1"
-    aria-labelledby="editCliente-label"
-    aria-hidden="true"
-  >
+  <div id="editCliente" class="modal fade" tabindex="-1" aria-labelledby="editCliente-label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -13,14 +7,8 @@
             <div class="mb-3">
               <label for="edit-input-cliente" class="form-label">Nombre</label>
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="edit-nombre-cliente"
-                  aria-describedby="icon-input-cliente"
-                  aria-label="editar nombre cliente"
-                  v-model="nombre"
-                />
+                <input type="text" class="form-control" id="edit-nombre-cliente" aria-describedby="icon-input-cliente"
+                  aria-label="editar nombre cliente" v-model="nombre" />
                 <!-- <span
                     class="input-group-text material-symbols-outlined"
                     id="icon-input-ingesta"
@@ -29,18 +17,10 @@
               </div>
             </div>
             <div class="mb-3">
-              <label for="edit-apellidos-cliente" class="form-label"
-                >Apellidos</label
-              >
+              <label for="edit-apellidos-cliente" class="form-label">Apellidos</label>
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="edit-apellidos-cliente"
-                  aria-describedby="icon-input-cliente"
-                  aria-label="editar apellidos cliente"
-                  v-model="apellidos"
-                />
+                <input type="text" class="form-control" id="edit-apellidos-cliente" aria-describedby="icon-input-cliente"
+                  aria-label="editar apellidos cliente" v-model="apellidos" />
                 <!-- <span
                     class="input-group-text material-symbols-outlined"
                     id="icon-input-ingesta"
@@ -49,36 +29,20 @@
               </div>
             </div>
             <div class="mb-3">
-              <label for="edit-fecha-nac-cliente" class="form-label"
-                >Fecha Nacimiento</label
-              >
+              <label for="edit-fecha-nac-cliente" class="form-label">Fecha Nacimiento</label>
               <div class="input-group mb-3">
-                <input
-                  type="date"
-                  class="form-control"
-                  id="edit-fecha-nac-cliente"
-                  aria-describedby="icon-input-cliente"
-                  aria-label="editar fecha nacimiento cliente"
-                  v-model="fecha_nac"
-                />
+                <input type="date" class="form-control" id="edit-fecha-nac-cliente" aria-describedby="icon-input-cliente"
+                  aria-label="editar fecha nacimiento cliente" v-model="fecha_nac" />
               </div>
             </div>
             <div class="mb-3">
-              <label for="edit-imagen-cliente" class="form-label"
-                >Imagen de perfil</label
-              >
+              <label for="edit-imagen-cliente" class="form-label">Imagen de perfil</label>
               <!-- Esto lo tengo que cambiar mas adelante de momento lo voy a dejar
                 como si fuera un texto, mas adelante lo pondre como una imagen que
                 se suba al servidor -->
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="edit-imagen-cliente"
-                  aria-describedby="icon-input-cliente"
-                  aria-label="editar imagen de perfil del cliente"
-                  v-model="url"
-                />
+                <input type="text" class="form-control" id="edit-imagen-cliente" aria-describedby="icon-input-cliente"
+                  aria-label="editar imagen de perfil del cliente" v-model="url" />
                 <!-- <div class="input-group mb-3">
                   <input
                     type="file"
@@ -94,19 +58,10 @@
           </form>
         </div>
         <div class="modal-footer text-center">
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="putCliente"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-primary" @click="putCliente" data-bs-dismiss="modal">
             Actualizar
           </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancelar
           </button>
         </div>
@@ -121,6 +76,8 @@ import { defineComponent } from "vue";
 import ClienteService from "@/services/cliente.service";
 // Tipos
 import type Cliente from "@/types/Cliente";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 
 export default defineComponent({
   name: "AddCliente",
@@ -134,12 +91,12 @@ export default defineComponent({
     };
   },
   props: { cliente: Object },
-  watch:{
-    cliente:function(newCliente){
-        this.nombre = newCliente.nombre
-        this.apellidos=newCliente.apellidos
-        this.fecha_nac=newCliente.fecha_nacimiento
-        this.url=newCliente.imagen
+  watch: {
+    cliente: function (newCliente) {
+      this.nombre = newCliente.nombre
+      this.apellidos = newCliente.apellidos
+      this.fecha_nac = newCliente.fecha_nacimiento
+      this.url = newCliente.imagen
     }
   },
 
@@ -167,6 +124,13 @@ export default defineComponent({
         if (response) {
           this.$emit("updateCliente");
         }
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
   },

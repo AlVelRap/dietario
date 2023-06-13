@@ -2,18 +2,13 @@
   <div class="container bg-primary-container border border-dark m-0">
     {{ usuario }}
   </div>
-  <div
-    class="container bg-primary-container border border-top-0 border-dark m-0"
-  >
+  <div class="container bg-primary-container border border-top-0 border-dark m-0">
     <div class="row">
       <div class="col">
-        <router-link
-          v-if="idPrevDieta > -1"
-          :to="{
-            path:
-              '/cliente/' + $route.params.id_cliente + '/dieta/' + idPrevDieta,
-          }"
-        >
+        <router-link v-if="idPrevDieta > -1" :to="{
+          path:
+            '/cliente/' + $route.params.id_cliente + '/dieta/' + idPrevDieta,
+        }">
           <span type="button" class="material-symbols-outlined float-start">
             chevron_left
           </span>
@@ -23,13 +18,10 @@
         {{ fecha }}
       </div>
       <div class="col">
-        <router-link
-          v-if="idNextDieta > -1"
-          :to="{
-            path:
-              '/cliente/' + $route.params.id_cliente + '/dieta/' + idNextDieta,
-          }"
-        >
+        <router-link v-if="idNextDieta > -1" :to="{
+          path:
+            '/cliente/' + $route.params.id_cliente + '/dieta/' + idNextDieta,
+        }">
           <span class="material-symbols-outlined float-end">
             chevron_right
           </span>
@@ -40,7 +32,9 @@
 </template>
 <script lang="ts">
 import dietaService from "@/services/dieta.service";
+import { useMessageStore } from "@/stores/messages";
 import type Dieta from "@/types/Dieta";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 import { defineComponent } from "vue";
 import { ref } from "vue";
 // import VueDatePicker from '@vuepic/vue-datepicker';
@@ -84,6 +78,13 @@ export default defineComponent({
                 index < dietas.length - 1 ? dietas[index + 1].id_dieta : -1;
             }
           });
+        }).catch((err) => {
+          const store = useMessageStore()
+          if (err.response && err.response.status == 403) {
+            store.message = "Necesitas estar logueado."
+            return
+          }
+          store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
         });
     },
   },

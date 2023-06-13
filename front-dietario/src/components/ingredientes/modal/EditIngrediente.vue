@@ -218,6 +218,7 @@ import {
   ENERGIA_HDC,
   ENERGIA_LIPIDO,
   ENERGIA_PROTEINA,
+  GENERIC_ERR_MESSAGE,
 } from "@/util/constants";
 import type Macronutrientes from "@/types/Macronutrientes";
 import type AcidosGrasos from "@/types/AcidosGrasos";
@@ -225,6 +226,7 @@ import type Minerales from "@/types/Minerales";
 import type Vitaminas from "@/types/Vitaminas";
 import type ResponseData from "@/types/ResponseData";
 import DeleteIngrediente from "@/components/ingredientes/modal/DeleteIngrediente.vue";
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "EditIngrediente",
@@ -349,28 +351,63 @@ export default defineComponent({
             ],
           };
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
 
       IngredienteService.getOne(this.id_ingrediente).then(
         (ingrediente: Ingrediente) => {
           this.ingrediente = ingrediente;
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
       Acidos_GrasosService.getOne(this.id_ingrediente).then(
         (acGrasos: AcidosGrasos) => {
           this.acGrasos = acGrasos;
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
       MineralesService.getOne(this.id_ingrediente).then(
         (minerales: Minerales) => {
           this.minerales = minerales;
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
       VitaminasService.getOne(this.id_ingrediente).then(
         (vitaminas: Vitaminas) => {
           this.vitaminas = vitaminas;
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
     },
     updateIngrediente(): void {
       if (!this.id_ingrediente || !this.id_ingesta) return;
@@ -387,6 +424,13 @@ export default defineComponent({
         if (response) {
           this.$emit("updateIngesta");
         }
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
   },

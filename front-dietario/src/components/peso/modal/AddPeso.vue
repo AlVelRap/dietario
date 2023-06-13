@@ -1,11 +1,5 @@
 <template>
-  <div
-    id="addPeso"
-    class="modal fade"
-    tabindex="-1"
-    aria-labelledby="addPeso-label"
-    aria-hidden="true"
-  >
+  <div id="addPeso" class="modal fade" tabindex="-1" aria-labelledby="addPeso-label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -13,45 +7,24 @@
             <div class="mb-3">
               <label for="input-peso" class="form-label">Peso</label>
               <div class="input-group mb-3">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="nombre-peso"
-                  aria-describedby="icon-input-peso"
-                  aria-label="Añadir peso"
-                  v-model="peso"
-                />
+                <input type="number" class="form-control" id="nombre-peso" aria-describedby="icon-input-peso"
+                  aria-label="Añadir peso" v-model="peso" />
               </div>
             </div>
             <div class="mb-3">
               <label for="fecha-peso" class="form-label">Fecha</label>
               <div class="input-group mb-3">
-                <input
-                  type="date"
-                  class="form-control"
-                  id="fecha-peso"
-                  aria-describedby="icon-input-peso"
-                  aria-label="Añadir fecha del peso del cliente"
-                  v-model="fecha"
-                />
+                <input type="date" class="form-control" id="fecha-peso" aria-describedby="icon-input-peso"
+                  aria-label="Añadir fecha del peso del cliente" v-model="fecha" />
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer text-center">
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="postPeso"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-primary" @click="postPeso" data-bs-dismiss="modal">
             Añadir
           </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancelar
           </button>
         </div>
@@ -64,6 +37,8 @@ import { defineComponent } from "vue";
 // Servicios
 import pesoService from "@/services/peso.service";
 import type Peso from "@/types/Peso";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 // Tipos
 
 export default defineComponent({
@@ -78,7 +53,7 @@ export default defineComponent({
 
   methods: {
     postPeso() {
-        // Modificamos el formato de la fecha
+      // Modificamos el formato de la fecha
       const fecha_nacimiento: Date = new Date(this.fecha);
       const year = fecha_nacimiento.getFullYear();
       const month = ("0" + (fecha_nacimiento.getMonth() + 1)).slice(-2);
@@ -96,6 +71,13 @@ export default defineComponent({
         if (response) {
           this.$emit("updatePeso");
         }
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
   },

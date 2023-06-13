@@ -54,6 +54,8 @@ import { defineComponent } from "vue";
 import ClienteService from "@/services/cliente.service";
 import type Cliente from "@/types/Cliente";
 import AddCliente from "./modal/AddCliente.vue";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 
 export default defineComponent({
   name: "ListaClientes",
@@ -67,7 +69,14 @@ export default defineComponent({
     getClientes() {
       ClienteService.getAll().then((data) => {
         this.listaClientes = data;
-      });
+      }).catch((err) => {
+        const store = useMessageStore()
+        if(err.response && err.response.status==403){
+          store.message = "Necesitas estar logueado."
+          return 
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });;
     },
   },
   mounted() {

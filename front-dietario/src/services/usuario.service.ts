@@ -6,11 +6,14 @@ import type Usuario from "@/types/Usuario";
 import http from "./http-comun";
 import type ResponseData from "@/types/ResponseData";
 
+
 class UsuarioService {
   login(data: Usuario): Promise<any> {
-    return http.post("/usuario/login", data).then((response: ResponseData) => {
-      return response.data;
-    });
+    return http
+      .post("/usuario/login", data)
+      .then((response: ResponseData) => {
+        return response.data;
+      })
   }
   register(data: Usuario): Promise<any> {
     return http
@@ -30,9 +33,11 @@ class UsuarioService {
     });
   }
   updatePass(data: any): Promise<any> {
-    return http.put("/usuario/password", data).then((response: ResponseData) => {
-      return response.data;
-    });
+    return http
+      .put("/usuario/password", data)
+      .then((response: ResponseData) => {
+        return response.data;
+      });
   }
   delete(): Promise<any> {
     return http.delete("/usuario/").then((response: ResponseData) => {

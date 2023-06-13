@@ -30,6 +30,8 @@ import IngredienteService from "@/services/ingrediente.service";
 import type Ingrediente from "@/types/Ingrediente";
 import MacronutrienteService from "@/services/macronutrientes.service";
 import type Macronutrientes from "@/types/Macronutrientes";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 
 export default defineComponent({
   name: "DatosIngesta",
@@ -67,9 +69,23 @@ export default defineComponent({
                 this.macros.proteinas = (macros.proteinas * cantidad) / 100;
               }
             }
-          );
+          ).catch((err) => {
+            const store = useMessageStore()
+            if (err.response && err.response.status == 403) {
+              store.message = "Necesitas estar logueado."
+              return
+            }
+            store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+          });
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
     },
     deleteIngrediente() {
       this.$emit('deleteIngrediente')

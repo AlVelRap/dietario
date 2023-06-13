@@ -76,6 +76,8 @@ import type IngestaIngrediente from "@/types/IngestaIngrediente";
 import type GrupoAlimentario from "@/types/GrupoAlimentario";
 import grupo_alimentarioService from "@/services/grupo_alimentario.service";
 import ingredienteService from "@/services/ingrediente.service";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 
 export default defineComponent({
   name: "AddIngrediente",
@@ -96,6 +98,13 @@ export default defineComponent({
     getIngredientes(): void {
       IngredienteService.getAll().then((ingredientes: Ingrediente[]) => {
         this.ingredientes = ingredientes;
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
     postIngrediente(): void {
@@ -110,6 +119,13 @@ export default defineComponent({
         if (response) {
           this.$emit("addIngrediente");
         }
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
     getGrupos() {
@@ -117,6 +133,13 @@ export default defineComponent({
         if (grupos) {
           this.grupos = grupos
         }
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       })
     },
     getIngredientesGrupo(event: Event) {
@@ -124,6 +147,13 @@ export default defineComponent({
       if (id_grupo != 0) {
         ingredienteService.getAll({ params: { id_grupo: id_grupo } }).then((ingredientes: Ingrediente[]) => {
           this.ingredientes = ingredientes;
+        }).catch((err) => {
+          const store = useMessageStore()
+          if (err.response && err.response.status == 403) {
+            store.message = "Necesitas estar logueado."
+            return
+          }
+          store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
         })
       } else {
         this.getIngredientes()

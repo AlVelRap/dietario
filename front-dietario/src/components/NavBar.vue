@@ -1,23 +1,11 @@
 <template>
+  {{ store.message }}
   <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
-      <router-link to="/" class="navbar-brand"
-        ><img
-          alt="Logo"
-          width="30"
-          height="24"
-          class="d-inline-block align-text-top"
-          src="../assets/logo.png"
-      /></router-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <router-link to="/" class="navbar-brand"><img alt="Logo" width="30" height="24"
+          class="d-inline-block align-text-top" src="../assets/logo.png" /></router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -33,21 +21,10 @@
           </li>
         </ul>
         <div class="d-flex">
-          <button
-            v-if="!auth"
-            class="btn btn-success"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#login"
-          >
+          <button v-if="!auth" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#login">
             LogIn
           </button>
-          <button
-            v-if="auth"
-            class="btn btn-danger"
-            @click="logoutUser"
-            type="button"
-          >
+          <button v-if="auth" class="btn btn-danger" @click="logoutUser" type="button">
             LogOut
           </button>
         </div>
@@ -58,10 +35,19 @@
   <Registro></Registro>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, watch } from "vue";
 // Componentes
 import Login from "@/components/acceso/Login.vue";
 import Registro from "@/components/acceso/Registro.vue";
+// Store
+import { useMessageStore } from "@/stores/messages"
+// import { storeToRefs } from "pinia";
+
+
+// const { message } = storeToRefs(store)
+// watch(message, () => {
+//   console.log(message)
+// })
 
 export default defineComponent({
   name: "NavBar",
@@ -69,24 +55,28 @@ export default defineComponent({
   data() {
     return {
       auth: false,
+      store: useMessageStore()
     };
   },
   components: {
-    Login,Registro
+    Login, Registro
   },
-  watch:{},
+
   methods: {
     logoutUser: function () {
       localStorage.removeItem("token-dietario");
-      this.auth = localStorage.getItem("token-dietario")?true:false
-      this.$router.push({ name: 'home'})
+      this.auth = localStorage.getItem("token-dietario") ? true : false
+      this.$router.push({ name: 'home' })
     },
-    checkAuth(){
-      this.auth = localStorage.getItem("token-dietario")?true:false
+    checkAuth() {
+      this.auth = localStorage.getItem("token-dietario") ? true : false
+      // if(this.auth){
+      //   this.$router.replace({ name: "listaClientes" });
+      // }
     }
   },
-  beforeMount(){
-    this.auth = localStorage.getItem("token-dietario")?true:false
+  beforeMount() {
+    this.auth = localStorage.getItem("token-dietario") ? true : false
   }
 });
 </script>

@@ -1,11 +1,5 @@
 <template>
-  <div
-    id="EditUsuario"
-    class="modal fade"
-    tabindex="-1"
-    aria-labelledby="EditUsuario-label"
-    aria-hidden="true"
-  >
+  <div id="EditUsuario" class="modal fade" tabindex="-1" aria-labelledby="EditUsuario-label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
@@ -13,58 +7,31 @@
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="nombre"
-                  aria-describedby="icon-nombre"
-                  aria-label="Nuevo nombre"
-                  v-model="nombre"
-                />
+                <input type="text" class="form-control" id="nombre" aria-describedby="icon-nombre"
+                  aria-label="Nuevo nombre" v-model="nombre" />
               </div>
             </div>
             <div class="mb-3">
               <label for="apellidos" class="form-label">Apellidos</label>
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="apellidos"
-                  aria-describedby="icon-apellidos"
-                  aria-label="Nuevo apellidos"
-                  v-model="apellidos"
-                />
+                <input type="text" class="form-control" id="apellidos" aria-describedby="icon-apellidos"
+                  aria-label="Nuevo apellidos" v-model="apellidos" />
               </div>
             </div>
             <div class="mb-3">
               <label for="correo" class="form-label">Correo</label>
               <div class="input-group mb-3">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="correo"
-                  aria-describedby="icon-correo"
-                  aria-label="Nuevo correo"
-                  v-model="correo"
-                />
+                <input type="email" class="form-control" id="correo" aria-describedby="icon-correo"
+                  aria-label="Nuevo correo" v-model="correo" />
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer text-center">
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="updateUsuario"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-primary" @click="updateUsuario" data-bs-dismiss="modal">
             Actualizar
           </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancelar
           </button>
         </div>
@@ -74,7 +41,9 @@
 </template>
 <script lang="ts">
 import usuarioService from "@/services/usuario.service";
+import { useMessageStore } from "@/stores/messages";
 import type Usuario from "@/types/Usuario";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 import { defineComponent } from "vue";
 // Servicios
 // Tipos
@@ -115,11 +84,17 @@ export default defineComponent({
         password: undefined,
         salt: undefined,
       };
-      usuarioService.updateGeneral(data).then((data)=>{
-        if(data){
+      usuarioService.updateGeneral(data).then((data) => {
+        if (data) {
           this.$emit("updateUsuario")
         }
-
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
   },

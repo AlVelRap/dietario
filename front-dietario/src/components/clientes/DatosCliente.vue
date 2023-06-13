@@ -1,46 +1,27 @@
 <template>
   <!-- boton de borrar Cliente -->
-  
+
   <div class="container my-4">
     <div class="float-end mt-3">
-      <button
-        class="btn btn-primary btn-round"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteCliente"
-      >
+      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteCliente">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
     <div class="row">
       <div class="col text-center">
-        <img
-          v-if="dataCliente"
-          alt="imagen del usuario"
-          :src="dataCliente.imagen"
-          class=""
-          style="width: 100px"
-          data-bs-toggle="modal"
-          data-bs-target="#editCliente"
-        />
+        <img v-if="dataCliente" alt="imagen del usuario" :src="dataCliente.imagen" class="" style="width: 100px"
+          data-bs-toggle="modal" data-bs-target="#editCliente" />
       </div>
     </div>
     <div class="row my-3 justify-content-center">
       <div class="col text-center">
-        <h1
-          v-if="dataCliente"
-          data-bs-toggle="modal"
-          data-bs-target="#editCliente"
-        >
+        <h1 v-if="dataCliente" data-bs-toggle="modal" data-bs-target="#editCliente">
           {{ dataCliente.nombre }} {{ dataCliente.apellidos }}
         </h1>
       </div>
     </div>
     <div class="row my-3">
-      <div
-        class="col text-center"
-        data-bs-toggle="modal"
-        data-bs-target="#editCliente"
-      >
+      <div class="col text-center" data-bs-toggle="modal" data-bs-target="#editCliente">
         <h4>{{ edad }} Años</h4>
       </div>
     </div>
@@ -55,11 +36,7 @@
       <h5>añada un peso</h5>
     </div>
     <div class="col-md-1 ">
-      <button
-        class="btn btn-primary btn-round"
-        data-bs-toggle="modal"
-        data-bs-target="#addPeso"
-      >
+      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#addPeso">
         <span class="material-symbols-outlined"> add </span>
       </button>
     </div>
@@ -69,13 +46,10 @@
     <div class="my-3">
       <h3>Peso</h3>
     </div>
-  
+
     <div class="row justify-content-center">
       <div class="col-md-12 col-lg-8">
-        <GraficoPeso
-          id_grafico="graficoPeso"
-          :data-peso="dataGrafico"
-        ></GraficoPeso>
+        <GraficoPeso id_grafico="graficoPeso" :data-peso="dataGrafico"></GraficoPeso>
       </div>
     </div>
   </div>
@@ -89,20 +63,14 @@
       <div class="col-12 col-md-10 col-lg-8">
         <div class="container">
           <hr />
-          <div
-            class="row justify-content-between"
-            v-for="dieta in dietasCliente"
-          >
-            <router-link
-              :to="{
-                path:
-                  '/cliente/' +
-                  $route.params.id_cliente +
-                  '/dieta/' +
-                  dieta.id_dieta,
-              }"
-              style="text-decoration: none; color: black"
-            >
+          <div class="row justify-content-between" v-for="dieta in dietasCliente">
+            <router-link :to="{
+              path:
+                '/cliente/' +
+                $route.params.id_cliente +
+                '/dieta/' +
+                dieta.id_dieta,
+            }" style="text-decoration: none; color: black">
               <div class="col text-center">
                 <h5>
                   {{ formatFecha(dieta.fecha_dieta.toString()) }}
@@ -113,11 +81,7 @@
           </div>
           <div class="row">
             <div class="col text-center">
-              <button
-                class="btn btn-primary btn-round"
-                data-bs-toggle="modal"
-                data-bs-target="#addDieta"
-              >
+              <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#addDieta">
                 <span class="material-symbols-outlined"> add </span>
               </button>
             </div>
@@ -126,10 +90,7 @@
       </div>
     </div>
     <AddDieta @update-dieta="getDietas"></AddDieta>
-    <EditCliente
-      :cliente="dataCliente"
-      @update-cliente="getClientes"
-    ></EditCliente>
+    <EditCliente :cliente="dataCliente" @update-cliente="getClientes"></EditCliente>
     <DeleteCliente></DeleteCliente>
   </div>
 </template>
@@ -150,6 +111,8 @@ import type Peso from "@/types/Peso";
 import type Dieta from "@/types/Dieta";
 import clienteService from "@/services/cliente.service";
 import type ResponseData from "@/types/ResponseData";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 
 export default defineComponent({
   name: "ListaClientes",
@@ -185,6 +148,13 @@ export default defineComponent({
       ClienteService.getOne(id_cliente).then((data) => {
         this.dataCliente = data;
         this.getEdad();
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
     getDietas(id_cliente?: number) {
@@ -193,6 +163,13 @@ export default defineComponent({
         : Number(this.$route.params.id_cliente);
       DietaService.getAll(id_cliente).then((data) => {
         this.dietasCliente = data;
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
     getPesos(id_cliente?: number) {
@@ -203,6 +180,13 @@ export default defineComponent({
         this.pesosCliente = data;
         this.getLastPeso();
         this.graphicPeso();
+      }).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
     formatFecha(fecha: string): string {

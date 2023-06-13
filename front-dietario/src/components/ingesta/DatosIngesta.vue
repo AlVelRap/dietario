@@ -50,6 +50,8 @@ import AddIngrediente from "../ingredientes/modal/AddIngrediente.vue";
 import IngestaIngredienteService from "@/services/ingestaIngrediente.service";
 import type IngestaIngrediente from "@/types/IngestaIngrediente";
 import DeleteIngesta from "@/components/ingesta/modal/DeleteIngesta.vue";
+import { useMessageStore } from "@/stores/messages";
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 
 export default defineComponent({
   name: "DatosIngesta",
@@ -88,7 +90,14 @@ export default defineComponent({
           if (!data) return;
           this.ingesta = data;
         }
-      );
+      ).catch((err) => {
+        const store = useMessageStore()
+        if (err.response && err.response.status == 403) {
+          store.message = "Necesitas estar logueado."
+          return
+        }
+        store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
+      });
     },
     getaddIngrediente() {
       this.getIngestaData()
