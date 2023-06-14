@@ -31,7 +31,7 @@ Ingrediente.findById = (id_ingrediente, result) => {
 };
 
 Ingrediente.getAll = (result) => {
-  let query = "SELECT * FROM ingrediente";
+  let query = "SELECT * FROM ingrediente order by nombre";
 
   conn.query(query, (err, res) => {
     if (err) {
@@ -45,7 +45,7 @@ Ingrediente.getAll = (result) => {
   });
 };
 Ingrediente.getAllByGrupo = (id_grupo, result) => {
-  let query = "SELECT * FROM ingrediente WHERE id_grupo = ?;";
+  let query = "SELECT * FROM ingrediente WHERE id_grupo = ? order by nombre;";
 
   conn.query(query, [id_grupo], (err, res) => {
     if (err) {
