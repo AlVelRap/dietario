@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useMessageStore = defineStore("messages", {
-  state: () => ({ message: "prueba" }),
+  state: () => ({ message: "" }),
   actions: {
     setMessage(newMessage: string) {
       this.message = newMessage;

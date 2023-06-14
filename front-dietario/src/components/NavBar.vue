@@ -1,5 +1,16 @@
 <template>
-  {{ store.message }}
+  <!-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      {{ store.message }}
+    </div>
+  </div> -->
+<Notificacion></Notificacion>
   <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"><img alt="Logo" width="30" height="24"
@@ -39,15 +50,9 @@ import { defineComponent, watch } from "vue";
 // Componentes
 import Login from "@/components/acceso/Login.vue";
 import Registro from "@/components/acceso/Registro.vue";
+import Notificacion from "@/components/errores/Notificacion.vue"
 // Store
 import { useMessageStore } from "@/stores/messages"
-// import { storeToRefs } from "pinia";
-
-
-// const { message } = storeToRefs(store)
-// watch(message, () => {
-//   console.log(message)
-// })
 
 export default defineComponent({
   name: "NavBar",
@@ -59,9 +64,8 @@ export default defineComponent({
     };
   },
   components: {
-    Login, Registro
+    Login, Registro, Notificacion
   },
-
   methods: {
     logoutUser: function () {
       localStorage.removeItem("token-dietario");
