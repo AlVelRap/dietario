@@ -1,16 +1,5 @@
 <template>
-  <!-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      {{ store.message }}
-    </div>
-  </div> -->
-<Notificacion></Notificacion>
+  <Notificacion></Notificacion>
   <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"><img alt="Logo" width="30" height="24"
@@ -28,7 +17,7 @@
             <router-link to="/cliente" class="nav-link text-white">Clientes</router-link>
           </li>
           <li class="nav-item" v-if="auth">
-            <router-link to="/settings" class="nav-link text-white">Settings</router-link>
+            <router-link to="/settings" class="nav-link text-white">Configuración</router-link>
           </li>
         </ul>
         <div class="d-flex">

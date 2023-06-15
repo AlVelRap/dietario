@@ -3,7 +3,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <img class="img-thumbnail" src="../../assets/logo.png" alt="logo" height="60" width="60" />
+          <h5 class="modal-title text-center w-100">
+            <img class="img-thumbnail" src="../../assets/logo.png" alt="logo" height="60" width="60" />
+          </h5>
         </div>
         <div class="modal-body">
           <form>
