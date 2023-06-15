@@ -20,6 +20,9 @@ $navbar-light-toggler-border-color: rgba($color-toggle-navbar, .1);
 @import "bootstrap";
 
 // Indicamos nuestras nuevas clases
+body{
+  background-color: #fcdab37c;
+}
 
 .modal-header {
   border-bottom: 0px;
