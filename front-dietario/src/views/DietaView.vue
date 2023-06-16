@@ -1,21 +1,21 @@
 <template>
-  <div class="container m-0">
-    <div class="row justify-content-md-center">
-      <div class="col-12 text-center">
+  <div class="container p-0 m-0">
+    <div class="row justify-content-md-center p-0 m-0">
+      <div class="col-12 text-center p-0 m-0">
         <HeaderDieta :usuario="usuario" :fecha="fecha"></HeaderDieta>
       </div>
     </div>
-    <div class="float-end my-3">
-      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteDieta">
+    <div class="float-end my-3" style="z-index: 2000;">
+      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteDieta" >
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
-    <div class="row my-3 justify-content-md-center">
-      <div class="col-md-12 col-lg-10 text-start offset-lg-4">
+    <div class="row my-3 justify-content-md-center p-0 m-0">
+      <div class="col-md-12 col-lg-10 text-start p-0 m-0">
         <h5>Objetivo del día</h5>
       </div>
     </div>
-    <div class="row my-3 justify-content-md-center">
+    <div class="row my-3 justify-content-md-center p-0 m-0">
       <div class="col-6 text-end gx-2">
         <h3 contenteditable="true" @focusout="updateDieta" v-if="objetivoKcal">
           {{ objetivoKcal.toFixed(0) }}
@@ -25,7 +25,7 @@
         <h3>- {{ realKcal.toFixed(0) }} = {{ diffKcall.toFixed(0) }}</h3>
       </div>
     </div>
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center p-0 m-0">
       <div class="col-md-12 col-lg-10">
         <div class="container">
           <div class="row text-center justify-content-md-center">
@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="row my-3 justify-content-md-center">
+    <div class="row my-3 justify-content-md-center p-0 m-0">
       <div class="col-md-12 col-lg-6">
         <div class="accordion accordion-flush" id="ingestas">
           <div class="accordion-item" v-for="ingesta in ingestas">

@@ -14,16 +14,18 @@
     </div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-4 p-0 d-none d-lg-block">
+        <div class="col-md-4 m-0 p-0 d-none d-lg-block ">
           <ListaClientes></ListaClientes>
         </div>
-        <div class="col-12 col-lg-8 p-0">
+        <div class="col-12 col-lg-8 m-0 p-0">
           <router-view></router-view>
         </div>
       </div>
     </div>
     <AddCliente @update-cliente="$router.go"></AddCliente>
   </template>
+
+
   <script lang="ts">
   import { defineComponent } from "vue";
   import ListaClientes from "../components/clientes/ListaClientes.vue";

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // Funcion del Token
 const signToken = (_id) => {
-  return jwt.sign({ _id }, "mi-secreto", {
+  return jwt.sign({ _id }, process.env.JWT_SECRET || "mi-secreto", {
     expiresIn: 60 * 60 * 24 * 365,
   });
 };
@@ -223,11 +223,11 @@ exports.updatePass = (req, res) => {
                     });
                   }
                 } else {
-                  console.log(data)
+                  console.log(data);
                   const token = signToken(data.id_user);
-                  console.log(token)
+                  console.log(token);
                   // return res.send({ token });
-                  return
+                  return;
 
                   // // Devolvemos solo data que no comprometa la seguridad
                   // // respuesta = {

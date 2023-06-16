@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import type{ ChartOptions } from "chart.js";
 import { Line } from "vue-chartjs";
 
 ChartJS.register(

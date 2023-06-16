@@ -10,19 +10,16 @@ module.exports = (app) => {
 
   // Crear un nuevo usuario
   router.post("/register", usuario.create);
+  
   // Para hacer login
   router.post("/login", usuario.login);
 
-  // // Obtener un nuevo usuario
-  // router.get("/", isAuthenticated, usuario.findAll);
-
-  // // Obtener un usuario con su id
-  // router.get("/:id", isAuthenticated, usuario.findOne);
   // Obtener un usuario con su id
   router.get("/", isAuthenticated, usuario.findOne);
 
   // Actualizar un usuario con su id
   router.put("/", isAuthenticated, usuario.update);
+
   // Actualizar un usuario con su id
   router.put("/password", isAuthenticated, usuario.updatePass);
 

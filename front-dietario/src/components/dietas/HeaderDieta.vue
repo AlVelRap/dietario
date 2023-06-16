@@ -1,10 +1,10 @@
 <template>
-  <div class="container bg-primary-container border border-dark m-0">
+  <div class="container-fluid bg-primary-container border border-dark p-0 m-0">
     {{ usuario }}
   </div>
-  <div class="container bg-primary-container border border-top-0 border-dark m-0">
-    <div class="row">
-      <div class="col">
+  <div class="container-fluid bg-primary-container border border-top-0 border-dark p-0 m-0">
+    <div class="row p-0 m-0">
+      <div class="col p-0 m-0">
         <router-link v-if="idPrevDieta > -1" :to="{
           path:
             '/cliente/' + $route.params.id_cliente + '/dieta/' + idPrevDieta,
@@ -14,10 +14,10 @@
           </span>
         </router-link>
       </div>
-      <div class="col">
+      <div class="col p-0 m-0">
         {{ fecha }}
       </div>
-      <div class="col">
+      <div class="col p-0 m-0">
         <router-link v-if="idNextDieta > -1" :to="{
           path:
             '/cliente/' + $route.params.id_cliente + '/dieta/' + idNextDieta,
@@ -73,9 +73,8 @@ export default defineComponent({
         .then((dietas: Dieta[]) => {
           dietas.forEach((dieta, index) => {
             if (dieta.id_dieta == Number(this.$route.params.id_dieta)) {
-              this.idNextDieta = index > 0 ? dietas[index - 1].id_dieta : -1;
-              this.idPrevDieta =
-                index < dietas.length - 1 ? dietas[index + 1].id_dieta : -1;
+              this.idNextDieta = index > 0 ? Number(dietas[index - 1].id_dieta) : -1;
+              this.idPrevDieta = index < dietas.length - 1 ? Number(dietas[index + 1].id_dieta) : -1;
             }
           });
         }).catch((err) => {

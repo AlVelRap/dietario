@@ -2,8 +2,18 @@ import axios from "axios";
 import type { AxiosInstance } from "axios";
 import { VERSION, REST, API } from "../util/constants";
 
+// const url =  `http://localhost:${process.env.PORT}/${API}/${REST}/${VERSION}` || `http://localhost:3000/${API}/${REST}/${VERSION}`
+const url_backend =  `http://localhost:3000/${API}/${REST}/${VERSION}`
+// const url_backend =  `http://backend:6868/${API}/${REST}/${VERSION}`
+// const url_backend =  `http://localhost:6868/${API}/${REST}/${VERSION}`
+
+
+// console.log(process.env.PORT)
+
+// console.log(url)
+
 const apiClient: AxiosInstance = axios.create({
-  baseURL: `http://localhost:3000/${API}/${REST}/${VERSION}`,
+  baseURL: url_backend,
   headers: {
     "Content-type": "application/json",
     "Authorization": localStorage.getItem('token-dietario'),

@@ -1,7 +1,7 @@
 <template>
   <!-- boton de borrar Cliente -->
 
-  <div class="container my-4">
+  <div class="container-fluid m-0 p-0 my-4">
     <div class="float-end mt-3">
       <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteCliente">
         <span class="material-symbols-outlined"> delete </span>
@@ -13,21 +13,21 @@
           data-bs-toggle="modal" data-bs-target="#editCliente" />
       </div>
     </div>
-    <div class="row my-3 justify-content-center">
+    <div class="row my-3 justify-content-center p-0 m-0">
       <div class="col text-center">
         <h1 v-if="dataCliente" data-bs-toggle="modal" data-bs-target="#editCliente">
           {{ dataCliente.nombre }} {{ dataCliente.apellidos }}
         </h1>
       </div>
     </div>
-    <div class="row my-3">
+    <div class="row my-3 p-0 m-0">
       <div class="col text-center" data-bs-toggle="modal" data-bs-target="#editCliente">
         <h4>{{ edad }} Años</h4>
       </div>
     </div>
   </div>
 
-  <div class="row text-center justify-content-center my-3">
+  <div class="row text-center justify-content-center my-3 p-0 m-0">
     <div class="col-md-2 col-sm-4" v-if="ultimoPeso">
       <h5>{{ ultimoPeso.peso }} kg</h5>
       <p>{{ fechaUltPeso }}</p>

@@ -13,32 +13,32 @@
               <label for="email-login" class="form-label">Email</label>
               <div class="input-group mb-3">
                 <input type="email" class="form-control" id="email-login" aria-describedby="icon-email-login"
-                  aria-label="Añadir objetivo dieta" v-model="email" />
+                  aria-label="correo" placeholder="Escriba su correo" v-model="email" required/>
               </div>
             </div>
             <div class="mb-3">
               <label for="pass-login" class="form-label">Contraseña</label>
               <div class="input-group mb-3">
                 <input type="password" class="form-control" id="pass-login" aria-describedby="icon-password-login"
-                  aria-label="contraseña" v-model="password" />
+                  aria-label="contraseña" placeholder="Escriba su contraseña" v-model="password" required/>
               </div>
             </div>
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="recordar-login" v-model="recordarme" />
               <label class="form-check-label" for="recordar-login">Recordarme</label>
             </div>
+            <div>
+              <a href="#">He olvidado mi contraseña</a>
+            </div>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-primary" @click="loginUser" data-bs-dismiss="modal" >
+                Iniciar Sesión
+              </button>
+              <button type="button" class="btn btn-secondary" data-bs-target="#registro" data-bs-toggle="modal">
+                Registrarse
+              </button>
+            </div>
           </form>
-          <div>
-            <a href="#">He olvidado mi contraseña</a>
-          </div>
-          <div class="modal-footer text-center">
-            <button type="button" class="btn btn-primary" @click="loginUser" data-bs-dismiss="modal">
-              Iniciar Sesión
-            </button>
-            <button type="button" class="btn btn-secondary" data-bs-target="#registro" data-bs-toggle="modal">
-              Registrarse
-            </button>
-          </div>
         </div>
       </div>
     </div>

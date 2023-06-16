@@ -3,7 +3,7 @@ module.exports = {
     USER: process.env.DB_USER || "admindieta",
     PASSWORD: process.env.DB_PASSWORD || "admindieta",
     DB: process.env.DB_NAME || "dietariodb",
-    port: process.env.DB_PORT || "3306",
+    PORT: process.env.DB_PORT || "3306",
     dialect: "mysql",
     pool: {
       max: 5,

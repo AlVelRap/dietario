@@ -43,4 +43,7 @@ require("./app/routes/grupo_alimentario.route")(app);
 const PORT = process.env.NODE_DOCKER_PORT || 3000;
 app.listen(PORT, () => {
   console.log(`El servidor esta corriendo en el puerto ${PORT}.`);
+  if(process.env.DB_PORT){
+    console.log(`El puerto de la DB es el puerto ${process.env.DB_PORT}.`);
+  }
 });

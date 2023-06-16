@@ -5,10 +5,10 @@ import Navbar from "./components/NavBar.vue";
 </script>
 
 <template>
-  <header>
+  <header class="m-0 p-0">
     <Navbar />
   </header>
-  <main>
+  <main class="m-0 p-0">
     <RouterView />
   </main>
   <footer></footer>

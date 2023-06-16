@@ -1,3 +1,5 @@
+// import {Config} from "../../config"
+// export const BASE_URL=`http://${Config.DOMAIN_BACK}:${Config.PORT_BACK}`
 export const VERSION = "1.0"
 export const REST = "rest"
 export const API = "api"
