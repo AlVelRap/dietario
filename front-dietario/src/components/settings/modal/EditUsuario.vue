@@ -4,31 +4,47 @@
       <div class="modal-content">
         <div class="modal-body">
           <form>
+            <!-- Nombre -->
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="nombre" aria-describedby="icon-nombre"
-                  aria-label="Nuevo nombre" v-model="nombre" />
+                <input type="text" class="form-control" :class="{ 'form-error': v$.form.nombre.$errors.length }"
+                  id="nombre" aria-describedby="icon-nombre" aria-label="Nuevo nombre" v-model="v$.form.nombre.$model" />
+              </div>
+              <div class="input-errors" v-for="(error, index) of v$.form.nombre.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
+            <!-- Apellidos -->
             <div class="mb-3">
               <label for="apellidos" class="form-label">Apellidos</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="apellidos" aria-describedby="icon-apellidos"
-                  aria-label="Nuevo apellidos" v-model="apellidos" />
+                <input type="text" class="form-control" :class="{ 'form-error': v$.form.apellidos.$errors.length }"
+                  id="apellidos" aria-describedby="icon-apellidos" aria-label="Nuevo apellidos"
+                  v-model="v$.form.apellidos.$model" />
+              </div>
+              <!-- error message -->
+              <div class="input-errors" v-for="(error, index) of v$.form.apellidos.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
+            <!-- Correo -->
             <div class="mb-3">
               <label for="correo" class="form-label">Correo</label>
               <div class="input-group mb-3">
-                <input type="email" class="form-control" id="correo" aria-describedby="icon-correo"
-                  aria-label="Nuevo correo" v-model="correo" />
+                <input type="email" class="form-control" :class="{ 'form-error': v$.form.correo.$errors.length }"
+                  id="correo" aria-describedby="icon-correo" aria-label="Nuevo correo" v-model="v$.form.correo.$model" />
+              </div>
+              <!-- error message -->
+              <div class="input-errors" v-for="(error, index) of v$.form.correo.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-primary" @click="updateUsuario" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary" @click="updateUsuario" :disabled="v$.form.$invalid"
+            data-bs-dismiss="modal">
             Actualizar
           </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -40,22 +56,34 @@
   </div>
 </template>
 <script lang="ts">
-import usuarioService from "@/services/usuario.service";
-import { useMessageStore } from "@/stores/messages";
-import type Usuario from "@/types/Usuario";
-import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 import { defineComponent } from "vue";
 // Servicios
+import usuarioService from "@/services/usuario.service";
 // Tipos
+import type Usuario from "@/types/Usuario";
+// Store
+import { useMessageStore } from "@/stores/messages";
+// Constantes
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Validators
+import useVuelidate from '@vuelidate/core'
+import { required, email, helpers, maxLength } from '@vuelidate/validators'
+
 
 export default defineComponent({
   name: "EditUsuario",
 
   data() {
     return {
-      nombre: "",
-      apellidos: "",
-      correo: "",
+      v$: useVuelidate(),
+      form: {
+        nombre: "",
+        apellidos: "",
+        correo: "",
+      },
+      // nombre: "",
+      // apellidos: "",
+      // correo: "",
     };
   },
   props: {
@@ -63,24 +91,45 @@ export default defineComponent({
     apellidosOriginal: String,
     correoOriginal: String,
   },
+  validations() {
+    return {
+      form: {
+        nombre: {
+          required: helpers.withMessage("Escriba un nombre.", required),
+          max: helpers.withMessage("El nombre debe tener menos de 64 caracteres.", maxLength(64))
+        },
+        apellidos: {
+          required: helpers.withMessage("Escriba su(s) apellido(s).", required),
+          max: helpers.withMessage("Los apellidos deben tener menos de 64 caracteres.", maxLength(64))
+        },
+        correo: {
+          required: helpers.withMessage("Escriba una dirección de correo.", required),
+          email: helpers.withMessage("Escribe una dirección de correo correcta.", email),
+          max: helpers.withMessage("La contraseña debe tener menos de 255 caracteres.", maxLength(255))
+        },
+      }
+    }
+  },
   watch: {
     nombreOriginal() {
-      this.nombre = this.nombreOriginal ? this.nombreOriginal : "";
+      this.form.nombre = this.nombreOriginal ? this.nombreOriginal : "";
     },
     apellidosOriginal() {
-      this.apellidos = this.apellidosOriginal ? this.apellidosOriginal : "";
+      this.form.apellidos = this.apellidosOriginal ? this.apellidosOriginal : "";
     },
     correoOriginal() {
-      this.correo = this.correoOriginal ? this.correoOriginal : "";
+      this.form.correo = this.correoOriginal ? this.correoOriginal : "";
     },
   },
   methods: {
     updateUsuario() {
+      if (!this.v$.$validate()) return
+      if (this.v$.$error) return
       const data: Usuario = {
         id_user: undefined,
-        nombre: this.nombre,
-        apellidos: this.apellidos,
-        email: this.correo,
+        nombre: this.form.nombre,
+        apellidos: this.form.apellidos,
+        email: this.form.correo,
         password: undefined,
         salt: undefined,
       };

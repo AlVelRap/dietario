@@ -1,9 +1,8 @@
 <template>
   <DeleteIngrediente :id_ingesta="id_ingesta" :id_ingrediente="id_ingrediente"
     @delete-ingrediente="$emit('deleteIngrediente')"></DeleteIngrediente>
-  <div :id="`ingrediente${id_ingrediente}-${id_ingesta}`" class="modal fade" tabindex="-1" :aria-labelledby="
-    'ingrediente' + id_ingrediente + '-' + id_ingesta + '-label'
-  " aria-hidden="true">
+  <div :id="`ingrediente${id_ingrediente}-${id_ingesta}`" class="modal fade" tabindex="-1" :aria-labelledby="'ingrediente' + id_ingrediente + '-' + id_ingesta + '-label'
+    " aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -69,50 +68,41 @@
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" :id="'macros-tab' + id_ingrediente + '-' + id_ingesta"
-                    data-bs-toggle="tab" :data-bs-target="
-                      '#macros' + id_ingrediente + '-' + id_ingesta
-                    " type="button" role="tab" :aria-controls="
-  'macros' + id_ingrediente + '-' + id_ingesta
-" aria-selected="true">
+                    data-bs-toggle="tab" :data-bs-target="'#macros' + id_ingrediente + '-' + id_ingesta
+                      " type="button" role="tab" :aria-controls="'macros' + id_ingrediente + '-' + id_ingesta
+    " aria-selected="true">
                     Macros
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" :id="'a-grasos-tab' + id_ingrediente + '-' + id_ingesta" data-bs-toggle="tab"
-                    :data-bs-target="
-                      '#a-grasos' + id_ingrediente + '-' + id_ingesta
-                    " type="button" role="tab" :aria-controls="
-  'a-grasos' + id_ingrediente + '-' + id_ingesta
-" aria-selected="false">
+                    :data-bs-target="'#a-grasos' + id_ingrediente + '-' + id_ingesta
+                      " type="button" role="tab" :aria-controls="'a-grasos' + id_ingrediente + '-' + id_ingesta
+    " aria-selected="false">
                     A. Grasos
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" :id="'minerales-tab' + id_ingrediente + '-' + id_ingesta" data-bs-toggle="tab"
-                    :data-bs-target="
-                      '#minerales' + id_ingrediente + '-' + id_ingesta
-                    " type="button" role="tab" :aria-controls="
-  'minerales' + id_ingrediente + '-' + id_ingesta
-" aria-selected="false">
+                    :data-bs-target="'#minerales' + id_ingrediente + '-' + id_ingesta
+                      " type="button" role="tab" :aria-controls="'minerales' + id_ingrediente + '-' + id_ingesta
+    " aria-selected="false">
                     Minerales
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" :id="'vitaminas-tab' + id_ingrediente + '-' + id_ingesta" data-bs-toggle="tab"
-                    :data-bs-target="
-                      '#vitaminas' + id_ingrediente + '-' + id_ingesta
-                    " type="button" role="tab" :aria-controls="
-  'vitaminas' + id_ingrediente + '-' + id_ingesta
-" aria-selected="false">
+                    :data-bs-target="'#vitaminas' + id_ingrediente + '-' + id_ingesta
+                      " type="button" role="tab" :aria-controls="'vitaminas' + id_ingrediente + '-' + id_ingesta
+    " aria-selected="false">
                     Vitaminas
                   </button>
                 </li>
               </ul>
               <div class="tab-content border border-top-0 p-2" id="myTabContent">
                 <div class="tab-pane fade show active" :id="'macros' + id_ingrediente + '-' + id_ingesta" role="tabpanel"
-                  :aria-labelledby="
-                    'macros' + id_ingrediente + '-' + id_ingesta + '-label'
-                  " tabindex="0">
+                  :aria-labelledby="'macros' + id_ingrediente + '-' + id_ingesta + '-label'
+                    " tabindex="0">
                   Por cada 100 gr.
                   <ul>
                     <li>Porción Comestible: {{ macros.porcion_comestible }}</li>
@@ -124,9 +114,8 @@
                   </ul>
                 </div>
                 <div class="tab-pane fade" :id="'a-grasos' + id_ingrediente + '-' + id_ingesta" role="tabpanel"
-                  :aria-labelledby="
-                    'a-grasos' + id_ingrediente + '-' + id_ingesta + '-label'
-                  " tabindex="0">
+                  :aria-labelledby="'a-grasos' + id_ingrediente + '-' + id_ingesta + '-label'
+                    " tabindex="0">
                   Por cada 100 gr.
                   <ul>
                     <li>Ac. G Saturados: {{ acGrasos.ac_g_saturado }} gr</li>
@@ -149,9 +138,8 @@
                   </ul>
                 </div>
                 <div class="tab-pane fade" :id="'minerales' + id_ingrediente + '-' + id_ingesta" role="tabpanel"
-                  :aria-labelledby="
-                    'macros' + id_ingrediente + '-' + id_ingesta + 'label'
-                  " tabindex="0">
+                  :aria-labelledby="'macros' + id_ingrediente + '-' + id_ingesta + 'label'
+                    " tabindex="0">
                   Por cada 100 gr.
                   <ul>
                     <li>Sodio: {{ minerales.sodio }} mg</li>
@@ -168,9 +156,8 @@
                   </ul>
                 </div>
                 <div class="tab-pane fade" :id="'vitaminas' + id_ingrediente + '-' + id_ingesta" role="tabpanel"
-                  :aria-labelledby="
-                    'vitaminas' + id_ingrediente + '-' + id_ingesta + '-label'
-                  " tabindex="0">
+                  :aria-labelledby="'vitaminas' + id_ingrediente + '-' + id_ingesta + '-label'
+                    " tabindex="0">
                   Por cada 100 gr.
                   <ul>
                     <li>Vit. A: {{ vitaminas.vit_a }} μgeq</li>
@@ -206,26 +193,30 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+// Componentes
 import GraficoIngesta from "@/components/ingesta/grafico/GraficoIngesta.vue";
+import DeleteIngrediente from "@/components/ingredientes/modal/DeleteIngrediente.vue";
+// Servicios
 import IngredienteService from "@/services/ingrediente.service";
 import IngestaIngredienteService from "@/services/ingestaIngrediente.service";
 import MacronutrienteService from "@/services/macronutrientes.service";
 import Acidos_GrasosService from "@/services/acidos_grasos.service";
 import MineralesService from "@/services/minerales.service";
 import VitaminasService from "@/services/vitaminas.service";
+// Tipos
 import type Ingrediente from "@/types/Ingrediente";
+import type Macronutrientes from "@/types/Macronutrientes";
+import type AcidosGrasos from "@/types/AcidosGrasos";
+import type Minerales from "@/types/Minerales";
+import type Vitaminas from "@/types/Vitaminas";
+// Constantes
 import {
   ENERGIA_HDC,
   ENERGIA_LIPIDO,
   ENERGIA_PROTEINA,
   GENERIC_ERR_MESSAGE,
 } from "@/util/constants";
-import type Macronutrientes from "@/types/Macronutrientes";
-import type AcidosGrasos from "@/types/AcidosGrasos";
-import type Minerales from "@/types/Minerales";
-import type Vitaminas from "@/types/Vitaminas";
-import type ResponseData from "@/types/ResponseData";
-import DeleteIngrediente from "@/components/ingredientes/modal/DeleteIngrediente.vue";
+// Store
 import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
@@ -420,7 +411,7 @@ export default defineComponent({
         this.id_ingrediente,
         this.id_ingesta,
         data
-      ).then((response: ResponseData) => {
+      ).then((response: any) => {
         if (response) {
           this.$emit("updateIngesta");
         }

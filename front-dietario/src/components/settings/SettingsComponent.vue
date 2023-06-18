@@ -16,7 +16,7 @@
     </div>
     <div class="row text-center">
       <div class="col">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditUsuario">
+        <button v-if="nombre" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditUsuario">
           Modificar
         </button>
       </div>

@@ -4,45 +4,57 @@
       <div class="modal-content">
         <div class="modal-body">
           <form>
+            <!-- Nombre -->
             <div class="mb-3">
               <label for="edit-input-cliente" class="form-label">Nombre</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="edit-nombre-cliente" aria-describedby="icon-input-cliente"
-                  aria-label="editar nombre cliente" v-model="nombre" />
-                <!-- <span
-                    class="input-group-text material-symbols-outlined"
-                    id="icon-input-ingesta"
-                    >restaurant_menu</span
-                  > -->
+                <input type="text" class="form-control" :class="{ 'form-error': v$.form.nombre.$errors.length }"
+                  id="edit-nombre-cliente" aria-describedby="icon-input-cliente" aria-label="editar nombre cliente"
+                  v-model="v$.form.nombre.$model" />
+
+              </div>
+              <!-- error message -->
+              <div class="input-errors" v-for="(error, index) of v$.form.nombre.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
+            <!-- Apellidos -->
             <div class="mb-3">
               <label for="edit-apellidos-cliente" class="form-label">Apellidos</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="edit-apellidos-cliente" aria-describedby="icon-input-cliente"
-                  aria-label="editar apellidos cliente" v-model="apellidos" />
-                <!-- <span
-                    class="input-group-text material-symbols-outlined"
-                    id="icon-input-ingesta"
-                    >restaurant_menu</span
-                  > -->
+                <input type="text" class="form-control" :class="{ 'form-error': v$.form.apellidos.$errors.length }"
+                  id="edit-apellidos-cliente" aria-describedby="icon-input-cliente" aria-label="editar apellidos cliente"
+                  v-model="v$.form.apellidos.$model" />
+
+              </div>
+              <!-- error message -->
+              <div class="input-errors" v-for="(error, index) of v$.form.apellidos.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
+            <!-- Fecha nacimiento -->
             <div class="mb-3">
               <label for="edit-fecha-nac-cliente" class="form-label">Fecha Nacimiento</label>
               <div class="input-group mb-3">
-                <input type="date" class="form-control" id="edit-fecha-nac-cliente" aria-describedby="icon-input-cliente"
-                  aria-label="editar fecha nacimiento cliente" v-model="fecha_nac" />
+                <input type="date" class="form-control" :class="{ 'form-error': v$.form.fecha_nac.$errors.length }"
+                  id="edit-fecha-nac-cliente" aria-describedby="icon-input-cliente"
+                  aria-label="editar fecha nacimiento cliente" v-model="v$.form.fecha_nac.$model" />
+              </div>
+              <!-- error message -->
+              <div class="input-errors" v-for="(error, index) of v$.form.fecha_nac.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
+            <!-- Imagen de perfil -->
             <div class="mb-3">
               <label for="edit-imagen-cliente" class="form-label">Imagen de perfil</label>
               <!-- Esto lo tengo que cambiar mas adelante de momento lo voy a dejar
                 como si fuera un texto, mas adelante lo pondre como una imagen que
                 se suba al servidor -->
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="edit-imagen-cliente" aria-describedby="icon-input-cliente"
-                  aria-label="editar imagen de perfil del cliente" v-model="url" />
+                <input type="text" class="form-control" :class="{ 'form-error': v$.form.imagen.$errors.length }"
+                  id="edit-imagen-cliente" aria-describedby="icon-input-cliente"
+                  aria-label="editar imagen de perfil del cliente" v-model="v$.form.imagen.$model" />
                 <!-- <div class="input-group mb-3">
                   <input
                     type="file"
@@ -54,11 +66,16 @@
                     @change="handleFileChange"
                   /> -->
               </div>
+              <!-- error message -->
+              <div class="input-errors" v-for="(error, index) of v$.form.imagen.$errors" :key="index">
+                <div class="error-msg">{{ error.$message }}</div>
+              </div>
             </div>
           </form>
         </div>
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-primary" @click="putCliente" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary" @click="putCliente" :disabled="v$.form.$invalid"
+            data-bs-dismiss="modal">
             Actualizar
           </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -76,37 +93,66 @@ import { defineComponent } from "vue";
 import ClienteService from "@/services/cliente.service";
 // Tipos
 import type Cliente from "@/types/Cliente";
-import { useMessageStore } from "@/stores/messages";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
+// Validators
+import useVuelidate from '@vuelidate/core'
+import { required, helpers, maxLength } from '@vuelidate/validators'
 
 export default defineComponent({
   name: "AddCliente",
 
   data() {
     return {
-      nombre: "",
-      apellidos: "",
-      fecha_nac: "",
-      url: "",
+      v$: useVuelidate(),
+      form: {
+        nombre: "",
+        apellidos: "",
+        fecha_nac: "",
+        imagen: "",
+      },
     };
   },
   props: { cliente: Object },
   watch: {
     cliente: function (newCliente) {
-      this.nombre = newCliente.nombre
-      this.apellidos = newCliente.apellidos
-      this.fecha_nac = newCliente.fecha_nacimiento
-      this.url = newCliente.imagen
+      this.form.nombre = newCliente.nombre
+      this.form.apellidos = newCliente.apellidos
+      this.form.fecha_nac = newCliente.fecha_nacimiento
+      this.form.imagen = newCliente.imagen
     }
   },
-
+  validations() {
+    return {
+      form: {
+        nombre: {
+          required: helpers.withMessage("Escriba un nombre.", required),
+          max: helpers.withMessage("El nombre debe tener menos de 64 caracteres.", maxLength(64))
+        },
+        apellidos: {
+          required: helpers.withMessage("Escriba los apellidos.", required),
+          max: helpers.withMessage("Los apellidos deben tener menos de 64 caracteres.", maxLength(64))
+        },
+        fecha_nac: {
+          required: helpers.withMessage("Escriba una fecha de nacimiento.", required),
+        },
+        imagen: {
+          // required: helpers.withMessage("Escriba un cd a.", required),
+          max: helpers.withMessage("La ruta debe tener menos de 255 caracteres.", maxLength(255))
+        },
+      }
+    }
+  },
   methods: {
     putCliente() {
+      if (!this.v$.$validate()) return
+      if (this.v$.$error) return
       // Inicializamos las variable
       const idCliente = Number(this.$route.params.id_cliente);
-
       // Modificamos el formato de la fecha
-      const fecha_nacimiento: Date = new Date(this.fecha_nac);
+      const fecha_nacimiento: Date = new Date(this.form.fecha_nac);
       const year = fecha_nacimiento.getFullYear();
       const month = ("0" + (fecha_nacimiento.getMonth() + 1)).slice(-2);
       const day = ("0" + fecha_nacimiento.getDate()).slice(-2);
@@ -114,11 +160,11 @@ export default defineComponent({
 
       const data: Cliente = {
         id_cliente: idCliente,
-        id_user: 5, // temporaly
-        nombre: this.nombre,
-        apellidos: this.apellidos,
+        id_user: undefined,
+        nombre: this.form.nombre,
+        apellidos: this.form.apellidos,
         fecha_nacimiento: cadenaFecha,
-        imagen: this.url,
+        imagen: this.form.imagen,
       };
       ClienteService.update(idCliente, data).then((response) => {
         if (response) {
