@@ -1,7 +1,7 @@
 <template>
   <!--Boton del Side Menu Offcanvas para la version móvil -->
   <button class="btn btn-primary d-lg-none float-end button-clientes" type="button" data-bs-toggle="offcanvas"
-    data-bs-target="#sideMenu" aria-controls="offcanvasResponsive">Clientes</button>
+    data-bs-target="#sideMenu" aria-controls="offcanvasResponsive" style="z-index: 2000;">Clientes</button>
   <!-- Side Menu Offcanvas, solo aparece en móvil -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="sideMenu" aria-labelledby="sideMenuLabel">
     <div class="offcanvas-header">
@@ -34,6 +34,7 @@ import { defineComponent } from "vue";
 // Componentes
 import ListaClientes from "../components/clientes/ListaClientes.vue";
 import AddCliente from "../components/clientes/modal/AddCliente.vue";
+
 export default defineComponent({
   name: "ClienteView",
   components: { ListaClientes, AddCliente }
