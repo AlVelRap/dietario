@@ -2,7 +2,7 @@
   <Doughnut :id="id_grafico" :options="chartOptions" :data="chartData" />
 </template>
 
-<script lang="ts">
+<script>
 // import { Bar } from "vue-chartjs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "vue-chartjs";

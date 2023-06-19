@@ -2,7 +2,7 @@
   <Line :id="id_grafico" :options="chartOptions" :data="dataPeso" />
 </template>
 
-<script lang="ts">
+<script>
 import {
   Chart as ChartJS,
   CategoryScale,

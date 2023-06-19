@@ -25,6 +25,9 @@ class UsuarioService {
   }
   updateGeneral(data: Usuario): Promise<any> {
     return http.put("/usuario/", data).then((response: ResponseData) => {
+      if(response.status==200){
+        alert("Datos cambiados satisfactoriamente.")
+      }
       return response.data;
     });
   }
@@ -40,6 +43,9 @@ class UsuarioService {
   }
   delete(): Promise<any> {
     return http.delete("/usuario/").then((response: ResponseData) => {
+      if(response.status==200){
+        alert("Se ha eliminado al usuario satisfactoriamente.")
+      }
       return response.data;
     });
   }

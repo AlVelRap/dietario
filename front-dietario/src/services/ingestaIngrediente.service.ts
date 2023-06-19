@@ -57,6 +57,9 @@ class IngestaIngredienteService {
         `/ingesta_ingrediente/ingrediente/${id_ingrediente}/ingesta/${id_ingesta}`
       )
       .then((response: ResponseData) => {
+        // if(response.status==200){
+        //   alert("Ingrediente eliminado.")
+        // }
         return response.data;
       });
   }
