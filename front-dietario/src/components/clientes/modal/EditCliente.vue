@@ -101,6 +101,19 @@ import { useMessageStore } from "@/stores/messages";
 import useVuelidate from '@vuelidate/core'
 import { required, helpers, maxLength } from '@vuelidate/validators'
 
+function dateToString(date:Date) {
+  return (
+    date.getFullYear() +
+    '-' +
+    pad(date.getMonth() + 1) +
+    '-' +
+    pad(date.getDate())
+  )
+}
+function pad(n:any, s:any = String(n)) {
+  return s.length < 2 ? `0${s}` : s
+}
+
 export default defineComponent({
   name: "AddCliente",
 
@@ -120,7 +133,7 @@ export default defineComponent({
     cliente: function (newCliente) {
       this.form.nombre = newCliente.nombre
       this.form.apellidos = newCliente.apellidos
-      this.form.fecha_nac = newCliente.fecha_nacimiento
+      this.form.fecha_nac = dateToString(new Date(newCliente.fecha_nacimiento))
       this.form.imagen = newCliente.imagen
     }
   },
@@ -139,7 +152,6 @@ export default defineComponent({
           required: helpers.withMessage("Escriba una fecha de nacimiento.", required),
         },
         imagen: {
-          // required: helpers.withMessage("Escriba un cd a.", required),
           max: helpers.withMessage("La ruta debe tener menos de 255 caracteres.", maxLength(255))
         },
       }

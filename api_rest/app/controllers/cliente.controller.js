@@ -65,18 +65,20 @@ exports.update = (req, res) => {
     });
   }
 
-  // console.log(req.body);
+  req.body.id_user = req.user.id_user
+
+  console.log(req.body);
   // console.log(req.params.id_cliente);
 
-  Cliente.updateById(req.s.id_cliente, new Cliente(req.body), (err, data) => {
+  Cliente.updateById(req.body.id_cliente, new Cliente(req.body), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `No se ha encontrado el Cliente con id ${req.params.id_cliente}.`,
+          message: `No se ha encontrado el Cliente con id ${req.body.id_cliente}.`,
         });
       } else {
         res.status(500).send({
-          message: "Error al actualizar el Cliente con id " + req.params.id_cliente,
+          message: "Error al actualizar el Cliente con id " + req.body.id_cliente,
         });
       }
     } else res.send(data);

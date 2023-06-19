@@ -63,11 +63,12 @@ Cliente.getAll = (id_user, result) => {
 
 Cliente.updateById = (id_cliente, cliente, result) => {
   conn.query(
-    "UPDATE cliente SET id_user = ?, nombre = ?, apellidos = ?, imagen = ? WHERE id_cliente = ?;",
+    "UPDATE cliente SET id_user = ?, nombre = ?, apellidos = ?, fecha_nacimiento = ?, imagen = ? WHERE id_cliente = ?;",
     [
       cliente.id_user,
       cliente.nombre,
       cliente.apellidos,
+      cliente.fecha_nacimiento,
       cliente.imagen,
       id_cliente,
     ],
