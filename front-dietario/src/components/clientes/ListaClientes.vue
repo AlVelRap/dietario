@@ -1,24 +1,20 @@
 <template>
   <div class="container my-4">
+    <!-- Titulo -->
     <div class="row">
       <div class="col text-center">
         <h1>Clientes</h1>
       </div>
     </div>
-    <div class="row" >
+    <div class="row">
       <div class="col">
+        <!-- Nombres de los clientes -->
         <div class="container">
           <hr />
-          <div
-            class="row justify-content-between"
-            v-for="cliente in listaClientes"
-          >
-            <router-link
-              :to="{
-                path: '/cliente/' + cliente.id_cliente,
-              }"
-              style="text-decoration: none; color: black"
-            >
+          <div class="row justify-content-between" v-for="cliente in listaClientes">
+            <router-link :to="{
+              path: '/cliente/' + cliente.id_cliente,
+            }" style="text-decoration: none; color: black">
               <div class="row ms-3 me-2">
                 <div class="col-10">
                   {{ cliente.nombre }} {{ cliente.apellidos }}
@@ -30,13 +26,10 @@
               <hr />
             </router-link>
           </div>
+          <!-- Boton de añadir clientes -->
           <div class="row">
             <div class="col text-center">
-              <button
-                class="btn btn-primary btn-round"
-                data-bs-toggle="modal"
-                data-bs-target="#addCliente"
-              >
+              <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#addCliente">
                 <span class="material-symbols-outlined"> add </span>
               </button>
             </div>
@@ -45,17 +38,18 @@
       </div>
     </div>
   </div>
-  <!-- ver como referescar los componentes esta es una muy mala aprximacion -->
-  <!-- <AddCliente @update-cliente="getClientes" /> -->
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+// Servicios
 import ClienteService from "@/services/cliente.service";
+// Tipos
 import type Cliente from "@/types/Cliente";
-import AddCliente from "./modal/AddCliente.vue";
-import { useMessageStore } from "@/stores/messages";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "ListaClientes",
@@ -64,16 +58,15 @@ export default defineComponent({
       listaClientes: [] as Cliente[],
     };
   },
-  components: { AddCliente },
   methods: {
     getClientes() {
       ClienteService.getAll().then((data) => {
         this.listaClientes = data;
       }).catch((err) => {
         const store = useMessageStore()
-        if(err.response && err.response.status==403){
+        if (err.response && err.response.status == 403) {
           store.message = "Necesitas estar logueado."
-          return 
+          return
         }
         store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });;

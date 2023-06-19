@@ -4,6 +4,7 @@
       <div class="modal-content">
         <div class="modal-body">
           <form>
+            <!-- Objetivo -->
             <div class="mb-3">
               <label for="objetivo-dieta" class="form-label">Objetivo</label>
               <div class="input-group mb-3">
@@ -16,6 +17,7 @@
                 <div class="error-msg">{{ error.$message }}</div>
               </div>
             </div>
+            <!-- Fecha -->
             <div class="mb-3">
               <label for="fecha-dieta" class="form-label">Fecha</label>
               <div class="input-group mb-3">

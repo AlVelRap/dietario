@@ -21,10 +21,10 @@
 import { defineComponent } from "vue";
 // Servicios
 import dietaService from "@/services/dieta.service";
-// Tipos
-import type ResponseData from "@/types/ResponseData";
-import { useMessageStore } from "@/stores/messages";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "DeleteDieta",
@@ -36,7 +36,7 @@ export default defineComponent({
           Number(this.$route.params.id_dieta),
           Number(this.$route.params.id_cliente)
         )
-        .then((response: ResponseData) => {
+        .then((response: any) => {
           if (response) {
             // Volvemos al usuario
             this.$router.push({

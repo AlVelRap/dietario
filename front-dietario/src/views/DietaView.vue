@@ -1,12 +1,14 @@
 <template>
   <div class="container p-0 m-0">
     <div class="row justify-content-md-center p-0 m-0">
+      <!-- Header de la Dieta -->
       <div class="col-12 text-center p-0 m-0">
         <HeaderDieta :usuario="usuario" :fecha="fecha"></HeaderDieta>
       </div>
     </div>
+    <!-- Boton de borrar la dieta -->
     <div class="float-end my-3" style="z-index: 2000;">
-      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteDieta" >
+      <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteDieta">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
@@ -16,6 +18,7 @@
       </div>
     </div>
     <div class="row my-3 justify-content-md-center p-0 m-0">
+      <!-- Data de la dieta -->
       <div class="col-6 text-end gx-2">
         <h3 contenteditable="true" @focusout="updateDieta" v-if="objetivoKcal">
           {{ objetivoKcal.toFixed(0) }}
@@ -48,12 +51,14 @@
     <div class="row my-3 justify-content-md-center p-0 m-0">
       <div class="col-md-12 col-lg-6">
         <div class="accordion accordion-flush" id="ingestas">
+          <!-- Elementos del acordeon -->
           <div class="accordion-item" v-for="ingesta in ingestas">
             <IngestaAccordeon :ingesta="ingesta" :key="`ingesta-${ingesta.id_ingesta}`" @update-ingesta="getData">
             </IngestaAccordeon>
           </div>
         </div>
       </div>
+      <!-- Boton de añadir ingesta -->
       <div class="row my-3 justify-content-md-center">
         <div class="col-md-12 col-lg-5 text-center">
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIngesta">
@@ -61,8 +66,7 @@
           </button>
         </div>
 
-        <!-- ver como referescar los componentes esta es una muy mala aprximacion -->
-        <!-- <AddIngesta @update-ingesta="$router.go" /> -->
+        <!-- Modales -->
         <AddIngesta @update-ingesta="getData" />
         <DeleteDieta />
       </div>
@@ -76,18 +80,15 @@ import HeaderDieta from "@/components/dietas/HeaderDieta.vue";
 import IngestaAccordeon from "@/components/ingesta/IngestaAccordeon.vue";
 import AddIngesta from "@/components/ingesta/modal/AddIngesta.vue";
 import DeleteDieta from "@/components/dietas/modal/DeleteDieta.vue";
+import GraficoIngesta from "@/components/ingesta/grafico/GraficoIngesta.vue";
 // Servicios
-import DietaService from "@/services/dieta.service";
 import ClienteService from "@/services/cliente.service";
 import IngestaService from "@/services/ingesta.service";
-import GraficoIngesta from "@/components/ingesta/grafico/GraficoIngesta.vue";
 import dietaService from "@/services/dieta.service";
 // Tipos
 import type Dieta from "@/types/Dieta";
 import type Cliente from "@/types/Cliente";
 import type Ingesta from "@/types/Ingesta";
-import type Macronutrientes from "@/types/Macronutrientes";
-import type ResponseData from "@/types/ResponseData";
 // Constantes
 import {
   ENERGIA_LIPIDO,
@@ -154,7 +155,7 @@ export default defineComponent({
   },
   methods: {
     getData() {
-      DietaService.getOne(
+      dietaService.getOne(
         Number(this.$route.params.id_cliente),
         Number(this.$route.params.id_dieta)
       ).then((dieta: Dieta) => {
@@ -221,7 +222,7 @@ export default defineComponent({
           Number(this.$route.params.id_dieta),
           Number(this.$route.params.id_cliente)
         )
-        .then((response: ResponseData) => {
+        .then((response: any) => {
           if (response) {
             // Volvemos al usuario
             this.$router.push({
@@ -229,8 +230,6 @@ export default defineComponent({
               params: { id_cliente: this.$route.params.id_cliente },
             });
           }
-          // Emitir evento para que se recargue todo
-          // Como ya somos el padre no tenemos que emitir nada, redireccionamos cliente
         });
     },
     updateDieta(e: Event) {
@@ -254,7 +253,7 @@ export default defineComponent({
         fecha_dieta: cadenaFecha,
         objetivo: objetivo,
       };
-      dietaService.update(idDieta, data).then((response: ResponseData) => {
+      dietaService.update(idDieta, data).then((response: any) => {
         if (response) {
           this.getData()
         }

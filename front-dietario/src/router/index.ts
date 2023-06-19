@@ -3,8 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ClienteView from "../views/ClienteView.vue";
 import DietaView from "../views/DietaView.vue";
-import Login from "../components/acceso/Login.vue";
-import Registro from "../components/acceso/Registro.vue";
 import DatosCliente from "@/components/clientes/DatosCliente.vue";
 import Settings from "@/components/settings/SettingsComponent.vue";
 import PageNotFound from "@/components/errores/PageNotFound.vue";
@@ -17,14 +15,6 @@ const router = createRouter({
       name: "home",
       component: HomeView,
     },
-    // {
-    //   path: "/about",
-    //   name: "about",
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import("../views/AboutView.vue"),
-    // },
     {
       path: "/cliente",
       name: "listaClientes",
@@ -42,16 +32,6 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: "/login",
-    //   name: "login",
-    //   component: Login,
-    // },
-    // {
-    //   path: "/registro",
-    //   name: "registro",
-    //   component: Registro,
-    // },
     {
       path: "/settings",
       name: "settings",

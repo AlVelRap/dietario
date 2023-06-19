@@ -7,11 +7,6 @@ const url_backend =  `http://localhost:3000/${API}/${REST}/${VERSION}`
 // const url_backend =  `http://backend:6868/${API}/${REST}/${VERSION}`
 // const url_backend =  `http://localhost:6868/${API}/${REST}/${VERSION}`
 
-
-// console.log(process.env.PORT)
-
-// console.log(url)
-
 const apiClient: AxiosInstance = axios.create({
   baseURL: url_backend,
   headers: {

@@ -1,4 +1,5 @@
 <template>
+  <!-- Boton de borrar ingesta -->
   <div class="float-end">
     <button v-if="ingestaProp" class="btn btn-primary btn-round" data-bs-toggle="modal"
       :data-bs-target="`#deleteIngesta-${ingestaProp.id_ingesta}`">
@@ -7,6 +8,7 @@
   </div>
   <div class="container">
     <div class="row">
+      <!-- Data general de la ingesta -->
       <div class="col text-center">
         <div v-if="ingestaProp">
           <h3>{{ ingestaProp.energiaTotal.toFixed(0) }} Kcal</h3>
@@ -19,6 +21,7 @@
         <hr />
       </div>
     </div>
+    <!-- Data de los ingredientes -->
     <div class="row">
       <div class="col">
         <div v-for="ingrediente in ingesta">
@@ -30,6 +33,7 @@
         </div>
       </div>
     </div>
+    <!-- Boton de añadir ingesta -->
     <div class="row text-center">
       <div class="col">
         <button v-if="ingestaProp" class="btn btn-primary btn-round" data-bs-toggle="modal"
@@ -37,6 +41,7 @@
           <span class="material-symbols-outlined"> add </span>
         </button>
       </div>
+      <!-- Modales -->
       <AddIngrediente :id_ingesta="id_ingesta" @add-ingrediente="getaddIngrediente" />
       <DeleteIngesta v-if="ingestaProp" :key="`deleteIngesta${ingestaProp.id_ingesta}`"
         :id_ingesta="ingestaProp.id_ingesta" @delete-ingesta="$emit('deleteIngesta')"></DeleteIngesta>
@@ -45,13 +50,18 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+// Componentes
 import DataIngrediente from "../ingredientes/DataIngrediente.vue";
-import AddIngrediente from "../ingredientes/modal/AddIngrediente.vue";
-import IngestaIngredienteService from "@/services/ingestaIngrediente.service";
-import type IngestaIngrediente from "@/types/IngestaIngrediente";
 import DeleteIngesta from "@/components/ingesta/modal/DeleteIngesta.vue";
-import { useMessageStore } from "@/stores/messages";
+import AddIngrediente from "../ingredientes/modal/AddIngrediente.vue";
+// Servicios
+import IngestaIngredienteService from "@/services/ingestaIngrediente.service";
+// Tipos
+import type IngestaIngrediente from "@/types/IngestaIngrediente";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "DatosIngesta",

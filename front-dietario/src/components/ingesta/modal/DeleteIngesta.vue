@@ -21,12 +21,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 // Servicios
-import dietaService from "@/services/dieta.service";
 import ingestaService from "@/services/ingesta.service";
-// Tipos
-import type ResponseData from "@/types/ResponseData";
-import { useMessageStore } from "@/stores/messages";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "DeleteIngesta",
@@ -38,11 +37,10 @@ export default defineComponent({
       if (!this.id_ingesta) return;
       ingestaService
         .delete(Number(this.$route.params.id_dieta), this.id_ingesta)
-        .then((response: ResponseData) => {
+        .then((response: any) => {
           if (response) {
             this.$emit("deleteIngesta");
           }
-          // Emitir evento para que se recargue todo
         }).catch((err) => {
           const store = useMessageStore()
           if (err.response && err.response.status == 403) {

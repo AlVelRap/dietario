@@ -4,6 +4,7 @@
       <div class="modal-content">
         <div class="modal-body">
           <form>
+            <!-- Nombre de la ingesta -->
             <div class="mb-3">
               <label for="input-ingesta" class="form-label">Nombre ingesta</label>
               <div class="input-group mb-3">

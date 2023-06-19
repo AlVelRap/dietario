@@ -8,19 +8,19 @@ $inverse-primary: #9bd84d;
 
 // para hacer que el toggle del navbar sea blanco
 
-$color-toggle-navbar:#fff;
+$color-toggle-navbar: #fff;
 
-$navbar-light-color:                rgba($color-toggle-navbar, .55);
-$navbar-light-hover-color:          rgba($color-toggle-navbar, .7);
-$navbar-light-active-color:         rgba($color-toggle-navbar, .9);
-$navbar-light-disabled-color:       rgba($color-toggle-navbar, .3);
-$navbar-light-toggler-border-color: rgba($color-toggle-navbar, .1);
+$navbar-light-color: rgba($color-toggle-navbar, 0.55);
+$navbar-light-hover-color: rgba($color-toggle-navbar, 0.7);
+$navbar-light-active-color: rgba($color-toggle-navbar, 0.9);
+$navbar-light-disabled-color: rgba($color-toggle-navbar, 0.3);
+$navbar-light-toggler-border-color: rgba($color-toggle-navbar, 0.1);
 
 // importamos bootstrap
 @import "bootstrap";
 
 // Indicamos nuestras nuevas clases
-body{
+body {
   background-color: #fcdab37c;
 }
 
@@ -31,25 +31,30 @@ body{
   border-top: 0px;
 }
 
-.btn-round{
-    border-radius: 100px;
-    height: 48px;
+.btn-round {
+  border-radius: 100px;
+  height: 48px;
 }
 
-.bg-primary-container{
-    background-color: $primary-container;
+.bg-primary-container {
+  background-color: $primary-container;
+}
+.border-end {
+  .border-primary-container {
+    border-color: $primary-container;
+  }
 }
 
-.button-clientes{
+.button-clientes {
   position: fixed;
   bottom: 20px;
   right: 20px;
 }
 
-.error-msg{
+.error-msg {
   color: red;
   font-size: small;
 }
-.form-error{
+.form-error {
   border-color: red;
 }

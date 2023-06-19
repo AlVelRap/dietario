@@ -19,12 +19,13 @@
   </div>
 </template>
 <script lang="ts">
-import usuarioService from "@/services/usuario.service";
-import { useMessageStore } from "@/stores/messages";
-import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 import { defineComponent } from "vue";
 // Servicios
-// Tipos
+import usuarioService from "@/services/usuario.service";
+// Constantes
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "DeleteUsuario",
@@ -33,8 +34,7 @@ export default defineComponent({
       usuarioService.delete().then((data) => {
         if (data) {
           localStorage.removeItem("token-dietario");
-          // this.$router.push({ name: "home" });
-          this.$router.go(0)
+          this.$router.go(0) // Recargar la pagina para que el roter le devuelva al home
         }
       }).catch((err) => {
         const store = useMessageStore()

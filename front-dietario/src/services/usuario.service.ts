@@ -1,7 +1,3 @@
-// import axios from "axios";
-// import { VERSION, REST, API } from "../util/constants";
-
-// axios.defaults.withCredentials = true; // Ver que es esto
 import type Usuario from "@/types/Usuario";
 import http from "./http-comun";
 import type ResponseData from "@/types/ResponseData";

@@ -31,22 +31,15 @@
   </div>
 </template>
 <script lang="ts">
-import dietaService from "@/services/dieta.service";
-import { useMessageStore } from "@/stores/messages";
-import type Dieta from "@/types/Dieta";
-import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 import { defineComponent } from "vue";
-import { ref } from "vue";
-// import VueDatePicker from '@vuepic/vue-datepicker';
-// import '@vuepic/vue-datepicker/dist/main.css'
-const date = ref(new Date());
-const format = (date: Date) => {
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-};
+// Servicios
+import dietaService from "@/services/dieta.service";
+// Tipos
+import type Dieta from "@/types/Dieta";
+// Constantes
+import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "HeaderDieta",
@@ -88,7 +81,6 @@ export default defineComponent({
     },
   },
   mounted() {
-    // this.date = this.fecha;
     this.getDietas();
   },
 });

@@ -44,6 +44,7 @@
       </div>
     </div>
   </div>
+  <!-- Modales -->
   <DeleteUsuario></DeleteUsuario>
   <CambiarPassword></CambiarPassword>
   <EditUsuario :nombreOriginal="nombre" :apellidosOriginal="apellidos" :correoOriginal="correo"
@@ -51,13 +52,18 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+// Componentes
 import DeleteUsuario from "@/components/settings/modal/DeleteUsuario.vue";
 import CambiarPassword from "@/components/settings/modal/CambiarPassword.vue";
-import usuarioService from "@/services/usuario.service";
-import type Usuario from "@/types/Usuario";
 import EditUsuario from "@/components/settings/modal/EditUsuario.vue";
-import { useMessageStore } from "@/stores/messages";
+// Servicios
+import usuarioService from "@/services/usuario.service";
+// Tipos
+import type Usuario from "@/types/Usuario";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Stores
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "SettingsComponent",

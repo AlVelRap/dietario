@@ -21,10 +21,10 @@
 import { defineComponent } from "vue";
 // Servicios
 import clienteService from "@/services/cliente.service";
-// Tipos
-import type ResponseData from "@/types/ResponseData";
-import { useMessageStore } from "@/stores/messages";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "DeleteCliente",
@@ -33,10 +33,9 @@ export default defineComponent({
     deleteCliente() {
       clienteService
         .delete(Number(this.$route.params.id_cliente))
-        .then((response: ResponseData) => {
+        .then((response: any) => {
           if (response) {
             // Volvemos a la lista de clientes
-            
             this.$router.push({
               name: "listaClientes",
             }) // Falta refrescar los componentes

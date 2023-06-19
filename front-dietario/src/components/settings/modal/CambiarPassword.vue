@@ -53,14 +53,13 @@ import { defineComponent } from "vue";
 // Servicios
 import usuarioService from "@/services/usuario.service";
 // Tipos
-import type Usuario from "@/types/Usuario";
 // Store
 import { useMessageStore } from "@/stores/messages";
 // Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
 // Validators
 import useVuelidate from '@vuelidate/core'
-import { required, email, minLength, helpers, sameAs, maxLength } from '@vuelidate/validators'
+import { required, minLength, helpers, sameAs, maxLength } from '@vuelidate/validators'
 
 
 export default defineComponent({

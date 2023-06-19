@@ -81,9 +81,6 @@ export default defineComponent({
         apellidos: "",
         correo: "",
       },
-      // nombre: "",
-      // apellidos: "",
-      // correo: "",
     };
   },
   props: {

@@ -70,8 +70,6 @@ export default defineComponent({
         fecha: "",
         peso: 0,
       },
-      // fecha: "",
-      // peso: 0,
     };
   },
   validations() {

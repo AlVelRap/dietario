@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts">
-// import { Bar } from "vue-chartjs";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,7 +13,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import type{ ChartOptions } from "chart.js";
 import { Line } from "vue-chartjs";
 
 ChartJS.register(
@@ -33,10 +31,6 @@ export default {
   props: { id_grafico: String, dataPeso: Object },
   data() {
     return {
-      // chartData: {
-      //   labels: this.dataPeso.labels,
-      //   datasets:this.dataPeso.datasets
-      // },
       chartOptions: {
         responsive: true,
         rotation: 0,
