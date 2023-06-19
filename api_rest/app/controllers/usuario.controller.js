@@ -168,6 +168,7 @@ exports.update = (req, res) => {
 };
 exports.updatePass = (req, res) => {
   if (!req.body) {
+    console.log("entra1");
     return res.status(404).send({
       message: `usuario y/o contraseña incorrecta`,
     });
@@ -221,32 +222,22 @@ exports.updatePass = (req, res) => {
                     });
                   }
                 } else {
-                  console.log(data);
                   const token = signToken(data.id_user);
                   console.log(token);
+                  return res.sendStatus(200)
                   // return res.send({ token });
-                  return;
-
-                  // // Devolvemos solo data que no comprometa la seguridad
-                  // // respuesta = {
-                  // //   nombre: data.nombre,
-                  // //   apellidos: data.apellidos,
-                  // //   email: data.email,
-                  // // };
-                  // // return res.send(respuesta);
-                  // return res.status(201).send("Contraseña actualizada");
-                  // // const token = signToken(data.id_user);
-                  // // return res.send({ token });
                 }
               });
             }
           );
         });
+      } else {
+        console.log("entra2");
+        // si no coincide la contraseña devolvemos el mensaje de error
+        return res.status(404).send({
+          message: `usuario y/o contraseña incorrecta`,
+        });
       }
-      // si no coincide la contraseña devolvemos el mensaje de error
-      return res.status(404).send({
-        message: `usuario y/o contraseña incorrecta`,
-      });
     }
   );
 };

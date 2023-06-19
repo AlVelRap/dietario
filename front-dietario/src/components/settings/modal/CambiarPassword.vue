@@ -38,7 +38,7 @@
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-primary" @click="cambiarPass" data-bs-dismiss="modal">
-            Borrar
+            Cambiar
           </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancelar
@@ -104,7 +104,7 @@ export default defineComponent({
         nuevoPass: this.form.nuevoPass,
       };
       usuarioService.updatePass(data).then((data) => {
-        console.log(data)
+        localStorage.setItem("token-dietario", data.token);
       }).catch((err) => {
         const store = useMessageStore()
         if (err.response && err.response.status == 403) {

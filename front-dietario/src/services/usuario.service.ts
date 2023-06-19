@@ -32,6 +32,9 @@ class UsuarioService {
     return http
       .put("/usuario/password", data)
       .then((response: ResponseData) => {
+        if(response.status==200){
+          alert("Contraseña cambiada satisfactoriamente.")
+        }
         return response.data;
       });
   }
