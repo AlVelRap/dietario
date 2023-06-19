@@ -1,19 +1,20 @@
 <template>
-  <!-- boton de borrar Cliente -->
-
   <div class="container-fluid m-0 p-0 my-4">
+    <!-- boton de borrar Cliente -->
     <div class="float-end mt-3">
       <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteCliente">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
     <div class="row">
+      <!-- Imagen del Cliente -->
       <div class="col text-center">
         <img v-if="dataCliente" alt="imagen del usuario" :src="dataCliente.imagen" class="" style="width: 100px"
           data-bs-toggle="modal" data-bs-target="#editCliente" />
       </div>
     </div>
     <div class="row my-3 justify-content-center p-0 m-0">
+      <!-- Nombre y apellidos del Cliente -->
       <div class="col text-center">
         <h1 v-if="dataCliente" data-bs-toggle="modal" data-bs-target="#editCliente">
           {{ dataCliente.nombre }} {{ dataCliente.apellidos }}
@@ -21,6 +22,7 @@
       </div>
     </div>
     <div class="row my-3 p-0 m-0">
+      <!-- Edad del cliente -->
       <div class="col text-center" data-bs-toggle="modal" data-bs-target="#editCliente">
         <h4>{{ edad }} Años</h4>
       </div>
@@ -28,6 +30,7 @@
   </div>
 
   <div class="row text-center justify-content-center my-3 p-0 m-0">
+    <!-- Ultimo peso del cliente -->
     <div class="col-md-2 col-sm-4" v-if="ultimoPeso">
       <h5>{{ ultimoPeso.peso }} kg</h5>
       <p>{{ fechaUltPeso }}</p>
@@ -40,79 +43,90 @@
         <span class="material-symbols-outlined"> add </span>
       </button>
     </div>
+    <!-- Modal de añadir peso al cliente -->
     <AddPeso @update-peso="$router.go"></AddPeso>
   </div>
-  <div class="container my-3">
-    <div class="my-3">
-      <h3>Peso</h3>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-md-12 col-lg-8">
-        <GraficoPeso id_grafico="graficoPeso" :data-peso="dataGrafico"></GraficoPeso>
-      </div>
-    </div>
-  </div>
-
-  <div class="container my-3">
-    <div>
-      <h3>Dietas</h3>
-      <!-- <button>Filtrar</button> -->
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8">
-        <div class="container">
-          <hr />
-          <div class="row justify-content-between" v-for="dieta in dietasCliente">
-            <router-link :to="{
-              path:
-                '/cliente/' +
-                $route.params.id_cliente +
-                '/dieta/' +
-                dieta.id_dieta,
-            }" style="text-decoration: none; color: black">
-              <div class="col text-center">
-                <h5>
-                  {{ formatFecha(dieta.fecha_dieta.toString()) }}
-                </h5>
-                <hr />
-              </div>
-            </router-link>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="container my-3">
+          <!-- Seccion del peso -->
+          <div class="my-3">
+            <h3>Peso</h3>
           </div>
-          <div class="row">
-            <div class="col text-center">
-              <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#addDieta">
-                <span class="material-symbols-outlined"> add </span>
-              </button>
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <GraficoPeso id_grafico="graficoPeso" :data-peso="dataGrafico"></GraficoPeso>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-12 col-md-6">
+        <div class="container my-3">
+          <!-- Seccion de las dietas -->
+          <div>
+            <h3>Dietas</h3>
+            <!-- <button>Filtrar</button> -->
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="container">
+                <hr />
+                <div class="row justify-content-between" v-for="dieta in dietasCliente">
+                  <router-link :to="{
+                    path:
+                      '/cliente/' +
+                      $route.params.id_cliente +
+                      '/dieta/' +
+                      dieta.id_dieta,
+                  }" style="text-decoration: none; color: black">
+                    <div class="col text-center">
+                      <h5>
+                        {{ formatFecha(dieta.fecha_dieta.toString()) }}
+                      </h5>
+                      <hr />
+                    </div>
+                  </router-link>
+                </div>
+                <div class="row">
+                  <div class="col text-center">
+                    <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#addDieta">
+                      <span class="material-symbols-outlined"> add </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Los modales -->
+          <AddDieta @update-dieta="getDietas"></AddDieta>
+          <EditCliente :cliente="dataCliente" @update-cliente="getClientes"></EditCliente>
+          <DeleteCliente></DeleteCliente>
+        </div>
+      </div>
     </div>
-    <AddDieta @update-dieta="getDietas"></AddDieta>
-    <EditCliente :cliente="dataCliente" @update-cliente="getClientes"></EditCliente>
-    <DeleteCliente></DeleteCliente>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-// import Chart from "chart.js/auto";
+// Componentes
 import GraficoPeso from "../peso/grafico/GraficoPeso.vue";
 import AddPeso from "../peso/modal/AddPeso.vue";
 import AddDieta from "../dietas/modal/AddDieta.vue";
 import EditCliente from "./modal/EditCliente.vue";
 import DeleteCliente from "./modal/DeleteCliente.vue";
-
+// Servicios
 import ClienteService from "@/services/cliente.service";
 import DietaService from "@/services/dieta.service";
 import PesoService from "@/services/peso.service";
+// Tipos
 import type Cliente from "@/types/Cliente";
 import type Peso from "@/types/Peso";
 import type Dieta from "@/types/Dieta";
-import clienteService from "@/services/cliente.service";
-import type ResponseData from "@/types/ResponseData";
-import { useMessageStore } from "@/stores/messages";
+// Constantes
 import { GENERIC_ERR_MESSAGE } from "@/util/constants";
+// Store
+import { useMessageStore } from "@/stores/messages";
 
 export default defineComponent({
   name: "ListaClientes",
