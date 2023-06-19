@@ -1,16 +1,13 @@
 module.exports = (app) => {
   const { isAuthenticated } = require("../auth/index");
-  const VERSION = "1.0";
-  const REST = "rest";
-  const API = "api";
-  // const {VERSION,REST,API} = require("../util/constant")
+  const { VERSION, REST, API } = require("../util/constants");
   const usuario = require("../controllers/usuario.controller.js");
 
   var router = require("express").Router();
 
   // Crear un nuevo usuario
   router.post("/register", usuario.create);
-  
+
   // Para hacer login
   router.post("/login", usuario.login);
 

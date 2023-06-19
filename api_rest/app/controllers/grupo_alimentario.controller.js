@@ -1,8 +1,7 @@
 const Grupo_Alimentario = require("../models/grupo_alimentario.model.js");
 
-// Recibir los grupo_alimentarios de la DB (con condicion).
+// Recibir los grupo_alimentarios de la DB
 exports.findAll = (req, res) => {
-  // const nombre = req.query.nombre;
 
   // Grupo_Alimentario.getAll(nombre, (err, data) => {
   Grupo_Alimentario.getAll((err, data) => {

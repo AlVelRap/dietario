@@ -23,7 +23,6 @@ Dieta.create = (nuevaDieta, result) => {
 
 Dieta.findById = (id_cliente, id_dieta, result) => {
   conn.query(
-    // `SELECT * FROM dieta WHERE id_cliente = ? and id_dieta = ?`,
     "SELECT d.id_dieta, d.id_cliente, d.fecha_dieta, d.objetivo, " +
       "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
       "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
@@ -57,10 +56,7 @@ Dieta.findById = (id_cliente, id_dieta, result) => {
 };
 
 Dieta.getAll = (id_cliente, result) => {
-  //// REVISAR ESTO!!!! De momento solo devolvemos los totales en la individual, aqui no porque no
-  // veo que haga falta
   let query =
-    // "SELECT * FROM dieta WHERE id_cliente = ? ORDER BY fecha_dieta DESC";
     "SELECT d.id_dieta, d.id_cliente, d.fecha_dieta, d.objetivo, " +
     "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
     "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +

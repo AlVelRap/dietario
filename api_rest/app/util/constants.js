@@ -1,3 +1,9 @@
-export const VERSION = "1.0"
-export const REST = "rest"
-export const API = "api"
+const VERSION = "1.0";
+const REST = "rest";
+const API = "api";
+
+module.exports = {
+  VERSION,
+  REST,
+  API,
+};

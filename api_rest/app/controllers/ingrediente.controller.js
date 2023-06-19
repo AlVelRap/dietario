@@ -1,6 +1,6 @@
 const Ingrediente = require("../models/ingrediente.model.js");
 
-// Recibir los ingredientes de la DB (con condicion).
+// Recibir los ingredientes de la DB.
 exports.findAll = (req, res) => {
   const id_grupo = req.query.id_grupo;
   if (id_grupo) {

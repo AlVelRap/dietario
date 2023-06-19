@@ -1,10 +1,7 @@
 const Macronutrientes = require("../models/macronutrientes.model.js");
 
-// Recibir los macronutrientess de la DB (con condicion).
+// Recibir los macronutrientess de la DB.
 exports.findAll = (req, res) => {
-  // const nombre = req.query.nombre;
-
-  // Macronutrientes.getAll(nombre, (err, data) => {
   Macronutrientes.getAll((err, data) => {
     if (err)
       res.status(500).send({

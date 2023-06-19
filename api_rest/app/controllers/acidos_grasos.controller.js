@@ -1,10 +1,8 @@
 const Acidos_Grasos = require("../models/acidos_grasos.model.js");
 
-// Recibir los acidos_grasoss de la DB (con condicion).
+// Recibir los acidos_grasoss de la DB
 exports.findAll = (req, res) => {
-  // const nombre = req.query.nombre;
 
-  // Acidos_Grasos.getAll(nombre, (err, data) => {
   Acidos_Grasos.getAll((err, data) => {
     if (err)
       res.status(500).send({

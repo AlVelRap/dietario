@@ -25,7 +25,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Recibir los Dietas de la DB (con condicion).
+// Recibir los Dietas de la DB
 exports.findAll = (req, res) => {
   Dieta.getAll(req.params.id_cliente,(err, data) => {
     if (err)

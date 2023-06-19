@@ -118,10 +118,7 @@ Ingesta_Ingrediente.remove = (id_ingesta, id_ingrediente, result) => {
         return;
       }
 
-      console.log(
-        "Borrado el ingesta_ingrediente con el id: ",
-        id_ingrediente
-      );
+      console.log("Borrado el ingesta_ingrediente con el id: ", id_ingrediente);
       result(null, res);
     }
   );

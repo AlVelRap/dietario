@@ -24,7 +24,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Recibir los Ingestas de la DB (con condicion).
+// Recibir los Ingestas de la DB
 exports.findAll = (req, res) => {
   Ingesta.getAll(req.params.id_dieta,(err, data) => {
     if (err)

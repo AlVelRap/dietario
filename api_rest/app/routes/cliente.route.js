@@ -1,9 +1,6 @@
 module.exports = (app) => {
   const { isAuthenticated } = require("../auth/index");
-  const VERSION = "1.0";
-  const REST = "rest";
-  const API = "api";
-  // const {VERSION,REST,API} = require("../util/constant")
+  const { VERSION, REST, API } = require("../util/constants");
   const cliente = require("../controllers/cliente.controller.js");
 
   var router = require("express").Router();
@@ -21,11 +18,7 @@ module.exports = (app) => {
   router.put("/:id_cliente", isAuthenticated, cliente.update);
 
   // Borrar un cliente con su id
-  router.delete(
-    "/:id_cliente",
-    isAuthenticated,
-    cliente.delete
-  );
+  router.delete("/:id_cliente", isAuthenticated, cliente.delete);
 
   // Borrar todos los clientes
   router.delete("/", isAuthenticated, cliente.deleteAll);

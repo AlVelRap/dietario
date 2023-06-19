@@ -1,9 +1,6 @@
 module.exports = (app) => {
   const { isAuthenticated } = require("../auth/index");
-  const VERSION = "1.0";
-  const REST = "rest";
-  const API = "api";
-  // const {VERSION,REST,API} = require("../util/constant")
+  const { VERSION, REST, API } = require("../util/constants");
   const ingrediente = require("../controllers/ingrediente.controller.js");
 
   var router = require("express").Router();

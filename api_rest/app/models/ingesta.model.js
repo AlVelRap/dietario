@@ -22,7 +22,6 @@ Ingesta.create = (nuevoIngesta, result) => {
 
 Ingesta.findById = (id_dieta, id_ingesta, result) => {
   conn.query(
-    // `SELECT * FROM ingesta WHERE id_dieta = ? and id_ingesta = ?`,
     "SELECT i.id_ingesta, i.id_dieta, i.nombre, " +
       "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
       "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
@@ -55,18 +54,18 @@ Ingesta.findById = (id_dieta, id_ingesta, result) => {
 };
 
 Ingesta.getAll = (id_dieta, result) => {
-  // let query = "SELECT * FROM ingesta WHERE id_dieta = ?";
-  let query ="SELECT i.id_ingesta, i.id_dieta, i.nombre, " +
-      "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
-      "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
-      "COALESCE(sum(m.hdc*ii.cantidad/100),0) as hdcTotal, " +
-      "COALESCE(sum(m.fibra*ii.cantidad/100),0) as fibraTotal, " +
-      "COALESCE(sum(m.lipidos*ii.cantidad/100),0) as lipidosTotal " +
-      "FROM ingesta i  " +
-      "left join ingesta_ingrediente ii on i.id_ingesta=ii.id_ingesta " +
-      "left join macronutrientes m on ii.id_ingrediente = m.id_ingrediente " +
-      "where i.id_dieta = ? " +
-      "group by i.id_ingesta;"
+  let query =
+    "SELECT i.id_ingesta, i.id_dieta, i.nombre, " +
+    "COALESCE(sum(m.energia*ii.cantidad/100),0) as energiaTotal, " +
+    "COALESCE(sum(m.proteinas*ii.cantidad/100),0) as proteinasTotal, " +
+    "COALESCE(sum(m.hdc*ii.cantidad/100),0) as hdcTotal, " +
+    "COALESCE(sum(m.fibra*ii.cantidad/100),0) as fibraTotal, " +
+    "COALESCE(sum(m.lipidos*ii.cantidad/100),0) as lipidosTotal " +
+    "FROM ingesta i  " +
+    "left join ingesta_ingrediente ii on i.id_ingesta=ii.id_ingesta " +
+    "left join macronutrientes m on ii.id_ingrediente = m.id_ingrediente " +
+    "where i.id_dieta = ? " +
+    "group by i.id_ingesta;";
 
   conn.query(query, [id_dieta], (err, res) => {
     if (err) {

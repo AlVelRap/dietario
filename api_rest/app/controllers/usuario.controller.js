@@ -172,7 +172,6 @@ exports.updatePass = (req, res) => {
       message: `usuario y/o contraseña incorrecta`,
     });
   }
-  // console.log(data);
   // Creamos la contraseña encriptada igual que en el registro
   crypto.pbkdf2(
     req.body.passActual,
@@ -207,7 +206,6 @@ exports.updatePass = (req, res) => {
                 password: encryptedPassword,
                 salt: newSalt,
               });
-              // console.log(newSalt)
               // actualizamos el usuario
               Usuario.updateById(usuario.id_user, usuario, (err, data) => {
                 if (err) {

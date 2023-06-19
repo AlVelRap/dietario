@@ -27,7 +27,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Recibir los Clientes de la DB (con condicion).
+// Recibir los Clientes de la DB
 exports.findAll = (req, res) => {
   Cliente.getAll(req.user.id_user,(err, data) => {
 
@@ -65,10 +65,10 @@ exports.update = (req, res) => {
     });
   }
 
+  // Añadimos a la peticion el id del usuario
   req.body.id_user = req.user.id_user
 
   console.log(req.body);
-  // console.log(req.params.id_cliente);
 
   Cliente.updateById(req.body.id_cliente, new Cliente(req.body), (err, data) => {
     if (err) {

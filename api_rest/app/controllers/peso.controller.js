@@ -25,7 +25,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Recibir los Pesos de la DB (con condicion).
+// Recibir los Pesos de la DB.
 exports.findAll = (req, res) => {
   Peso.getAll(req.params.id_cliente,(err, data) => {
     if (err)

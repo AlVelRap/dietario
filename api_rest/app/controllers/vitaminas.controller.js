@@ -1,10 +1,7 @@
 const Vitaminas = require("../models/vitaminas.model.js");
 
-// Recibir los vitaminass de la DB (con condicion).
+// Recibir los vitaminass de la DB.
 exports.findAll = (req, res) => {
-  // const nombre = req.query.nombre;
-
-  // Vitaminas.getAll(nombre, (err, data) => {
   Vitaminas.getAll((err, data) => {
     if (err)
       res.status(500).send({

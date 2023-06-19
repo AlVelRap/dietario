@@ -1,10 +1,7 @@
 const Minerales = require("../models/minerales.model.js");
 
-// Recibir los mineraless de la DB (con condicion).
+// Recibir los mineraless de la DB.
 exports.findAll = (req, res) => {
-  // const nombre = req.query.nombre;
-
-  // Minerales.getAll(nombre, (err, data) => {
   Minerales.getAll((err, data) => {
     if (err)
       res.status(500).send({
