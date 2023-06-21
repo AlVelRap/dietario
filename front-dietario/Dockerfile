@@ -22,7 +22,7 @@ RUN npm install
 COPY . .
 
 # construir aplicación para producción minificada
-RUN npm run build-only
+RUN npm run build
 
 EXPOSE 80
 

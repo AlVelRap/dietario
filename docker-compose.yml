@@ -30,9 +30,12 @@ services:
     stdin_open: true
     tty: true
   frontend:
+    depends_on:
+      - backend
     build: ./front-dietario/
     env_file:
       - ./.env
+    restart: unless-stopped
     ports:
       - $VUE_LOCAL_PORT:$VUE_DOCKER_PORT
     environment:
