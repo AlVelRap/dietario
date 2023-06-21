@@ -1,4 +1,3 @@
-.env
 api_rest/package-lock.json
 api_rest/node_modules
 db/er_dietariodb_corto.png
