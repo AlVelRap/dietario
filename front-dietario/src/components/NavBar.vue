@@ -27,10 +27,10 @@
         <!-- Botones de LogIn y LogOut -->
         <div class="d-flex">
           <button v-if="!auth" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#login">
-            LogIn
+            Acceso
           </button>
           <button v-if="auth" class="btn btn-danger" @click="logoutUser" type="button">
-            LogOut
+            Desconexión
           </button>
         </div>
       </div>

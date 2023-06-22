@@ -27,7 +27,7 @@
         <div class="col-md-12 col-lg-4 text-center my-3">
           <picture class="img-fluid">
             <!-- para el tamaño muy pequeño -->
-            <source media="(max-width: 576px)" srcset="@/assets/images/cliente-sxmall.png" />
+            <source media="(max-width: 576px)" srcset="@/assets/images/cliente-xsmall.png" />
             <!-- para el tamaño pequeño -->
             <source media="(max-width: 768px)" srcset="@/assets/images/cliente-small.png" />
             <!-- para el tamaño medio -->
@@ -96,7 +96,7 @@
                   <!-- para el tamaño muy grande -->
                   <source media="(min-width: 1140px)" srcset="@/assets/images/gest_cli-xlarge.png" />
                   <!-- Por defecto -->
-                  <img src="@/assets/images/gest_cli-large.jpg" alt="Gestión de clientes" />
+                  <img src="@/assets/images/gest_cli-large.png" alt="Gestión de clientes" />
                 </picture>
                 <!-- <img src="@/assets/images/Captura.png" class="d-block w-100" alt="Gestión de clientes"> -->
               </div>
@@ -113,7 +113,7 @@
                   <!-- para el tamaño muy grande -->
                   <source media="(min-width: 1140px)" srcset="@/assets/images/gest_ing-xlarge.png" />
                   <!-- Por defecto -->
-                  <img src="@/assets/images/gest_ing-large.jpg" alt="Gestión de ingredientes" />
+                  <img src="@/assets/images/gest_ing-large.png" alt="Gestión de ingredientes" />
                 </picture>
                 <!-- <img src="@/assets/images/Captura1.png" class="d-block w-100" alt="..."> -->
               </div>
@@ -130,7 +130,7 @@
                   <!-- para el tamaño muy grande -->
                   <source media="(min-width: 1140px)" srcset="@/assets/images/gest_dietas-xlarge.png" />
                   <!-- Por defecto -->
-                  <img src="@/assets/images/gest_dietas-large.jpg" alt="Gestión de dietas" />
+                  <img src="@/assets/images/gest_dietas-large.png" alt="Gestión de dietas" />
                 </picture>
                 <!-- <img src="@/assets/images/Captura3.png" class="d-block w-100" alt="..."> -->
               </div>
