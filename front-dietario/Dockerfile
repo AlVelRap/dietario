@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20-alpine as builder
 
 # ARG PORT
 # ARG DOMAIN
@@ -7,7 +7,7 @@ FROM node:20-alpine
 # ENV DOMAIN=${DOMAIN}
 
 # instalar un simple servidor http para servir nuestro contenido estático
-RUN npm install -g http-server
+# RUN npm install -g http-server
 
 # hacer la carpeta 'app' el directorio de trabajo actual
 WORKDIR /app
@@ -22,8 +22,21 @@ RUN npm install
 COPY . .
 
 # construir aplicación para producción minificada
-RUN npm run build-only
+RUN npm run build
+
+# EXPOSE 80
+
+# CMD [ "http-server", "dist" ]
+
+FROM nginx:alpine as production-build
+# Añadimos el fichero de configuracion de nginx
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+
+## Eliminamos el index previo
+RUN rm -rf /usr/share/nginx/html/*
+
+# copiamos el fichero del apartado anterior
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
-
-CMD [ "http-server", "dist" ]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -2,10 +2,11 @@ import axios from "axios";
 import type { AxiosInstance } from "axios";
 import { VERSION, REST, API } from "../util/constants";
 
-// const url =  `http://localhost:${process.env.PORT}/${API}/${REST}/${VERSION}` || `http://localhost:3000/${API}/${REST}/${VERSION}`
+// URL Para desarollo
 const url_backend =  `http://localhost:3000/${API}/${REST}/${VERSION}`
-// const url_backend =  `http://backend:6868/${API}/${REST}/${VERSION}`
-// const url_backend =  `http://localhost:6868/${API}/${REST}/${VERSION}`
+
+// Recuerda! Aqui va la IP!! Recuerda cambiarla al mover el portatil
+// const url_backend =  `http://192.168.1.142:6868/${API}/${REST}/${VERSION}`
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: url_backend,

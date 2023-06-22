@@ -6,6 +6,7 @@ import DietaView from "../views/DietaView.vue";
 import DatosCliente from "@/components/clientes/DatosCliente.vue";
 import Settings from "@/components/settings/SettingsComponent.vue";
 import PageNotFound from "@/components/errores/PageNotFound.vue";
+import RecordatorioMovil from "@/components/clientes/RecordatorioMovil.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       name: "listaClientes",
       component: ClienteView,
       children: [
+        {
+          path: "",
+          component: RecordatorioMovil,
+          name: "recodatorio",
+        },
         {
           path: ":id_cliente",
           component: DatosCliente,

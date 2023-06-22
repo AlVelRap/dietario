@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid m-0 p-0 my-4">
     <!-- boton de borrar Cliente -->
-    <div class="float-end mt-3">
+    <div class="float-end mt-3 me-3">
       <button class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#deleteCliente">
         <span class="material-symbols-outlined"> delete </span>
       </button>

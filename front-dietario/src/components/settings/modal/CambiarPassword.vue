@@ -104,6 +104,7 @@ export default defineComponent({
         nuevoPass: this.form.nuevoPass,
       };
       usuarioService.updatePass(data).then((data) => {
+        localStorage.removeItem("token-dietario")
         localStorage.setItem("token-dietario", data.token);
       }).catch((err) => {
         const store = useMessageStore()
