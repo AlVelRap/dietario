@@ -26,7 +26,7 @@ export default defineComponent({
 
         onMounted(() => {
             const timeout = setTimeout(() => {
-                console.log("entra")
+                // console.log("entra")
                 const toastLiveExample = document.getElementById('liveToast')
                 if (toastLiveExample) {
                     toastLiveExample.className = "toast"

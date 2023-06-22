@@ -45,8 +45,7 @@
               <!-- <a href="#">He olvidado mi contraseña</a> -->
             </div>
             <div class="modal-footer text-center">
-              <button type="button" class="btn btn-primary" @click="loginUser" :disabled="v$.form.$invalid"
-                data-bs-dismiss="modal">
+              <button type="button" class="btn btn-primary" @click="loginUser" :disabled="v$.form.$invalid" data-bs-dismiss="modal">
                 Iniciar Sesión
               </button>
               <button type="button" class="btn btn-secondary" data-bs-target="#registro" data-bs-toggle="modal">
@@ -54,6 +53,9 @@
               </button>
             </div>
           </form>
+          <div v-if="errMessage" class="alert alert-danger" role="alert">
+            {{ errMessage }}
+          </div>
         </div>
       </div>
     </div>
@@ -80,6 +82,7 @@ export default defineComponent({
         password: "",
         // recordarme: false,
       },
+      errMessage: "",
     };
   },
   validations() {
@@ -117,6 +120,10 @@ export default defineComponent({
         }
       })
         .catch((err) => {
+          if (err.response.status == 404) {
+            this.errMessage = "Usuario y/o Contraseña incorrecta"
+            return
+          }
           const store = useMessageStore()
           store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
         });

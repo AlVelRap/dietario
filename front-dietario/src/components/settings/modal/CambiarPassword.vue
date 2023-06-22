@@ -106,6 +106,7 @@ export default defineComponent({
       usuarioService.updatePass(data).then((data) => {
         localStorage.removeItem("token-dietario")
         localStorage.setItem("token-dietario", data.token);
+        this.$emit("updateUsuario")
       }).catch((err) => {
         const store = useMessageStore()
         if (err.response && err.response.status == 403) {
@@ -117,5 +118,6 @@ export default defineComponent({
 
     },
   },
+  emits: ["updateUsuario"],
 });
 </script>

@@ -1,5 +1,14 @@
 <template>
-  <h1>Hola, {{ nombre }}</h1>
+  <div v-if="successMes" class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-3">
+        <div class="alert alert-success" role="alert">
+          {{ successMes }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1 class="mx-5 mt-3">Hola, {{ nombre }}</h1>
   <hr />
   <div class="container">
     <div class="row">
@@ -46,9 +55,9 @@
   </div>
   <!-- Modales -->
   <DeleteUsuario></DeleteUsuario>
-  <CambiarPassword></CambiarPassword>
+  <CambiarPassword @update-usuario="successMes = 'Contraseña actualizada'"></CambiarPassword>
   <EditUsuario :nombreOriginal="nombre" :apellidosOriginal="apellidos" :correoOriginal="correo"
-    @update-usuario="getUsuario"></EditUsuario>
+    @update-usuario="updateUsuario"></EditUsuario>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -73,6 +82,7 @@ export default defineComponent({
       nombre: "",
       apellidos: "",
       correo: "",
+      successMes: ""
     };
   },
   components: {
@@ -97,6 +107,10 @@ export default defineComponent({
         store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message
       });
     },
+    updateUsuario() {
+      this.successMes = "Usuario actualizado"
+      this.getUsuario()
+    }
   },
   mounted() {
     this.getUsuario();
