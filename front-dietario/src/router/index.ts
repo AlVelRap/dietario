@@ -7,6 +7,7 @@ import DatosCliente from "@/components/clientes/DatosCliente.vue";
 import Settings from "@/components/settings/SettingsComponent.vue";
 import PageNotFound from "@/components/errores/PageNotFound.vue";
 import RecordatorioMovil from "@/components/clientes/RecordatorioMovil.vue"
+import UsuarioCreado from "@/components/acceso/UsuarioCreado.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       component: Settings,
     },
     {
+      path: "/creado",
+      name: "creado",
+      component: UsuarioCreado,
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "notFound",
       component: PageNotFound,
@@ -53,7 +59,7 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // Nos redirige a la pagina principal si no hay token
-  const rutasPublicas = ["/"];
+  const rutasPublicas = ["/", "/creado"];
   const rutasConAutorizacion = !rutasPublicas.includes(to.path);
   const token = localStorage.getItem("token-dietario");
 

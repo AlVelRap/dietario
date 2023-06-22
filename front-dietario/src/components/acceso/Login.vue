@@ -37,12 +37,12 @@
               </div>
             </div>
             <!-- Recordarme -->
-            <div class="mb-3 form-check">
+            <!-- <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="recordar-login" v-model="v$.form.recordarme.$model" />
               <label class="form-check-label" for="recordar-login">Recordarme</label>
-            </div>
+            </div> -->
             <div>
-              <a href="#">He olvidado mi contraseña</a>
+              <!-- <a href="#">He olvidado mi contraseña</a> -->
             </div>
             <div class="modal-footer text-center">
               <button type="button" class="btn btn-primary" @click="loginUser" :disabled="v$.form.$invalid"
@@ -78,7 +78,7 @@ export default defineComponent({
       form: {
         email: "",
         password: "",
-        recordarme: false,
+        // recordarme: false,
       },
     };
   },
@@ -93,7 +93,7 @@ export default defineComponent({
           required: helpers.withMessage("Escriba su contraseña.", required),
           min: helpers.withMessage("La contraseña debe tener más de 6 caracteres.", minLength(6))
         },
-        recordarme: {}
+        // recordarme: {}
       }
     }
   },

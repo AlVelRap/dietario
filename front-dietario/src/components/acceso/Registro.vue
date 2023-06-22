@@ -182,8 +182,9 @@ export default defineComponent({
         salt: undefined,
       };
       UsuarioService.register(data).then((res) => {
-        const store = useMessageStore()
-        store.message = "Usuario creado satisfactoriamente."
+        // const store = useMessageStore()
+        // store.message = "Usuario creado satisfactoriamente."
+        this.$router.replace({ name: "creado" });
       }).catch((err) => {
         const store = useMessageStore()
         store.message = !err.response ? GENERIC_ERR_MESSAGE : err.response.data.message

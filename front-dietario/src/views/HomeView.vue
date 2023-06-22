@@ -210,7 +210,7 @@
 
     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
       <li class="me-3">
-        <a class="text-body-secondary" href="#"><img src="@/assets/images/github-mark.svg" width="24" height="24"
+        <a class="text-body-secondary" href="https://github.com/AlVelRap/"><img src="@/assets/images/github-mark.svg" width="24" height="24"
             alt="Logo Github" /></a>
       </li>
     </ul>
