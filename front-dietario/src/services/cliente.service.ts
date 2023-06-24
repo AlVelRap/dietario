@@ -9,37 +9,25 @@ class ClienteService {
     });
   }
   getAll(): Promise<any> {
-    return http
-      .get(`/cliente/`)
-      .then((response: ResponseData) => {
-        return response.data;
-      });
+    return http.get(`/cliente/`).then((response: ResponseData) => {
+      return response.data;
+    });
   }
   getOne(id_cliente: number): Promise<any> {
-    return http
-      .get(`/cliente/${id_cliente}`)
-      .then((response: ResponseData) => {
-        return response.data;
-      });
+    return http.get(`/cliente/${id_cliente}`).then((response: ResponseData) => {
+      return response.data;
+    });
   }
-  update(
-    id_cliente: number,
-    data: any
-  ): Promise<any> {
+  update(id_cliente: number, data: any): Promise<any> {
     return http
-      .put(
-        `/cliente/${id_cliente}`,
-        data
-      )
+      .put(`/cliente/${id_cliente}`, data)
       .then((response: ResponseData) => {
         return response.data;
       });
   }
   delete(id_cliente: number): Promise<any> {
     return http
-      .delete(
-        `/cliente/${id_cliente}`
-      )
+      .delete(`/cliente/${id_cliente}`)
       .then((response: ResponseData) => {
         return response.data;
       });

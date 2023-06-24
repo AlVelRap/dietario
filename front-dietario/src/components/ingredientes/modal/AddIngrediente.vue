@@ -26,7 +26,7 @@
             </div>
             <!-- Ingrediente -->
             <div class="mb-3">
-              <label :for="`select-ingrediente-${id_ingesta}`" class="form-label">Grupo Alimentario</label>
+              <label :for="`select-ingrediente-${id_ingesta}`" class="form-label">Ingrediente</label>
               <select :id="`select-ingrediente-${id_ingesta}`" class="form-select"
                 :class="{ 'form-error': v$.form.id_ingrediente.$errors.length }" aria-label="Select de grupo ingrediente"
                 v-model="v$.form.id_ingrediente.$model">

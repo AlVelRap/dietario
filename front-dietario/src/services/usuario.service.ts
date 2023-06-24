@@ -2,14 +2,11 @@ import type Usuario from "@/types/Usuario";
 import http from "./http-comun";
 import type ResponseData from "@/types/ResponseData";
 
-
 class UsuarioService {
   login(data: Usuario): Promise<any> {
-    return http
-      .post("/usuario/login", data)
-      .then((response: ResponseData) => {
-        return response.data;
-      })
+    return http.post("/usuario/login", data).then((response: ResponseData) => {
+      return response.data;
+    });
   }
   register(data: Usuario): Promise<any> {
     return http

@@ -10,11 +10,9 @@ class IngredienteService {
       });
   }
   getAll(params?: object): Promise<any> {
-    return http
-      .get(`/ingrediente/`, params)
-      .then((response: ResponseData) => {
-        return response.data;
-      });
+    return http.get(`/ingrediente/`, params).then((response: ResponseData) => {
+      return response.data;
+    });
   }
 }
 

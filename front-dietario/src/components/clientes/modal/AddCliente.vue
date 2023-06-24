@@ -111,7 +111,7 @@ export default defineComponent({
         nombre: "",
         apellidos: "",
         fecha_nac: "",
-        imagen: "",
+        imagen: "https://c8.alamy.com/zooms/9/80d94c5b96c54446b2dc609a62b9f61b/2c5xkmf.jpg",
       },
     };
   },

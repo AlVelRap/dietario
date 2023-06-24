@@ -24,9 +24,7 @@ class IngestaService {
   }
   delete(id_dieta: number, id_ingesta: number): Promise<any> {
     return http
-      .delete(
-        `/ingesta/${id_ingesta}/dieta/${id_dieta}`
-      )
+      .delete(`/ingesta/${id_ingesta}/dieta/${id_dieta}`)
       .then((response: ResponseData) => {
         return response.data;
       });

@@ -2,6 +2,10 @@
 $primary: #416900;
 $secondary: #586249;
 
+$bg-color: #fcdab37c;
+
+$primary80: #9bd84d;
+
 $primary-container: #b6f566;
 $on-primary-container: #102000;
 $inverse-primary: #9bd84d;
@@ -21,8 +25,18 @@ $navbar-light-toggler-border-color: rgba($color-toggle-navbar, 0.1);
 
 // Indicamos nuestras nuevas clases
 body {
-  background-color: #fcdab37c;
+  background-color: $bg-color;
 }
+
+// Clase de color del modal
+// .modal-content {
+//   background-color: $primary-container;
+
+//   input {
+//     background-color: $primary80;
+//     border-color: $on-primary-container;
+//   }
+// }
 
 .modal-header {
   border-bottom: 0px;

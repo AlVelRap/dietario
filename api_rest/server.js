@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Root
 app.get("/", (req, res) => {
-  res.json({ message: "Bienvenido a la API de Alberto" });
+  res.json({ message: "Bienvenido a la API de Dietario" });
 });
 
 // Nuestras Rutas

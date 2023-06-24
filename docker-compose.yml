@@ -37,9 +37,6 @@ services:
       - ./.env
     restart: unless-stopped
     ports:
-      - $VUE_LOCAL_PORT:$VUE_DOCKER_PORT
-    environment:
-      - PORT=$NODE_DOCKER_PORT
-      - DOMAIN=backend
+      - 80:80
 volumes:
   mysql_database:

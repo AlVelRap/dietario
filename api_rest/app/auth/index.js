@@ -12,7 +12,7 @@ const isAuthenticated = (req, res, next) => {
 
   // Verificamos el token, necesitamos el secreto con
   // el que lo codificamos
-  jwt.verify(token, "mi-secreto", (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET || "mi-secreto", (err, decoded) => {
     // Buscamos en Usuario el ID decodificado
     Usuario.findById(decoded._id, (err, data) => {
       if (err) {

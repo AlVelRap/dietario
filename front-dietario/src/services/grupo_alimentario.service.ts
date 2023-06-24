@@ -10,11 +10,9 @@ class GrupoAlimentarioService {
       });
   }
   getAll(): Promise<any> {
-    return http
-      .get(`/grupo_alimentario/`)
-      .then((response: ResponseData) => {
-        return response.data;
-      });
+    return http.get(`/grupo_alimentario/`).then((response: ResponseData) => {
+      return response.data;
+    });
   }
 }
 
