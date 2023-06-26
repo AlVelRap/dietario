@@ -116,7 +116,8 @@ export default defineComponent({
         localStorage.setItem("token-dietario", res.token);
         if (localStorage.getItem("token-dietario")) {
           this.$emit("emitLogged", true);
-          this.$router.replace({ name: "listaClientes" });
+          // this.$router.replace({ name: "listaClientes" });
+          return window.location.pathname="/cliente"
         }
       })
         .catch((err) => {
