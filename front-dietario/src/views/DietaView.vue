@@ -241,11 +241,9 @@ export default defineComponent({
       const idDieta = Number(this.$route.params.id_dieta);
       const idCliente = Number(this.$route.params.id_cliente);
 
-      const fecha_dieta: Date = new Date(this.fecha);
-      const year = fecha_dieta.getFullYear();
-      const month = ("0" + (fecha_dieta.getMonth() + 1)).slice(-2);
-      const day = ("0" + fecha_dieta.getDate()).slice(-2);
+      const [day, month, year] = this.fecha.split("/");
       const cadenaFecha = `${year}-${month}-${day}`;
+
 
       const data: Dieta = {
         id_dieta: idDieta,
