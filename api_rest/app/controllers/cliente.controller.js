@@ -10,7 +10,7 @@ exports.create = (req, res) => {
   }
   // Creamos un Cliente
   const cliente = new Cliente({
-    id_user: req.body.id_user,
+    id_user: req.user.id_user,
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
     fecha_nacimiento: req.body.fecha_nacimiento,
