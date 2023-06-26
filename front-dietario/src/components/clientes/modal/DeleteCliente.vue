@@ -36,9 +36,10 @@ export default defineComponent({
         .then((response: any) => {
           if (response) {
             // Volvemos a la lista de clientes
-            this.$router.push({
-              name: "listaClientes",
-            }) // Falta refrescar los componentes
+            // this.$router.push({
+            //   name: "listaClientes",
+            // }) // Falta refrescar los componentes
+            return window.location.pathname="/cliente"
           }
           // Emitir evento para que se recargue todo
           // Como ya somos el padre no tenemos que emitir nada, redireccionamos cliente
