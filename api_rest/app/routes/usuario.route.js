@@ -21,10 +21,10 @@ module.exports = (app) => {
   router.put("/password", isAuthenticated, usuario.updatePass);
 
   // Borrar un usuario con su id
-  router.delete("/:id", isAuthenticated, usuario.delete);
+  router.delete("/", isAuthenticated, usuario.delete);
 
-  // Borrar todos los usuarios
-  router.delete("/", isAuthenticated, usuario.deleteAll);
+  // // Borrar todos los usuarios
+  // router.delete("/", isAuthenticated, usuario.deleteAll);
 
   app.use(`/${API}/${REST}/${VERSION}/usuario`, router);
 };
