@@ -168,7 +168,6 @@ exports.update = (req, res) => {
 };
 exports.updatePass = (req, res) => {
   if (!req.body) {
-    console.log("entra1");
     return res.status(404).send({
       message: `usuario y/o contraseña incorrecta`,
     });
@@ -259,16 +258,16 @@ exports.delete = (req, res) => {
   });
 };
 
-// Borrar todos los Usuarios de la DB.
-exports.deleteAll = (req, res) => {
-  Usuario.removeAll((err, data) => {
-    if (err)
-      res.status(500).send({
-        message: err.message || "Un error ocurrió al borrar los Usuarios.",
-      });
-    else
-      res.send({
-        message: `Todos los Usuarios se han borrados correctamente!`,
-      });
-  });
-};
+// // Borrar todos los Usuarios de la DB.
+// exports.deleteAll = (req, res) => {
+//   Usuario.removeAll((err, data) => {
+//     if (err)
+//       res.status(500).send({
+//         message: err.message || "Un error ocurrió al borrar los Usuarios.",
+//       });
+//     else
+//       res.send({
+//         message: `Todos los Usuarios se han borrados correctamente!`,
+//       });
+//   });
+// };

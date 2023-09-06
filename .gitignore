@@ -1,4 +1,5 @@
 api_rest/package-lock.json
+presentacion_y_memorias
 api_rest/node_modules
 db/er_dietariodb_corto.png
 db/init_data.sql
@@ -7,3 +8,7 @@ db/initdb_larga.sql
 db/initdb.sql
 ISO_Server
 Server
+figma
+db/er_dietariodb_largo-Horizontal.png
+db/er_dietariodb_largo.png
+recursos/logo.png
