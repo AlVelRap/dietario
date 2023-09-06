@@ -24,11 +24,8 @@ COPY . .
 # construir aplicación para producción minificada
 RUN npm run build
 
-# EXPOSE 80
-
-# CMD [ "http-server", "dist" ]
-
 FROM nginx:alpine as production-build
+
 # Añadimos el fichero de configuracion de nginx
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
